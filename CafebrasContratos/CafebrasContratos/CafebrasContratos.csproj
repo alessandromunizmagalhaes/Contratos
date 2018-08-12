@@ -134,5 +134,11 @@
   <ItemGroup>
     <Folder Include="bin\Debug\" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\SAPHelper\SAPHelper\SAPHelper.csproj">
+      <Project>{2097f4ea-ca84-4702-ac74-4a2ba6c384a6}</Project>
+      <Name>SAPHelper</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

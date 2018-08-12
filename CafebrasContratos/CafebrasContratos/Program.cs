@@ -36,6 +36,8 @@ namespace CafebrasContratos
 
             // deixa a aplicação ativa
             System.Windows.Forms.Application.Run();
+
+            //teste
         }
 
         private static void ConectarComSAP()
