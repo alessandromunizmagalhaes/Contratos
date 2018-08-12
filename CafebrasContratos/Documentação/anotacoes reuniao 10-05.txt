@@ -1,0 +1,24 @@
+1- Criar painel de configuração dos campos de usuário que estarão ativos para abertura de peneira, permitindo configurar qual label do campo.
+2- Criar campos para abertura de peneira e diferencial
+3- Criar nova aba ao lado da aba 'Item' chamada 'Abertura de Peneira' que irá habilitar/desabilitar conforme o tipo de item configurado no contrato.
+
+U_P01
+U_P02
+U_P03
+U_P04
+.
+.
+.
+U_P15
+
+U_D01
+U_D02
+U_D03
+U_D04
+.
+.
+.
+U_D15
+
+
+

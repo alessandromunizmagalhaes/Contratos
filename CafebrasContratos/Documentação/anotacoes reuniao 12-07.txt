@@ -1,0 +1,23 @@
+- segundo a documentação, um recebimento só pode existir se estiver relacionado a um pedido de compra? sim.
+
+- trava de criação de documentos de marketing deve ser:
+	- se um documento de marketing não veio de contrato e possui uma das utilizações bloqueadas, emitir o alerta:
+		- 'Este documento não pode ser criado com esta UTILIZAÇÃO sem o uso do contrato'. 
+- adição de campo de filial no cadastro de unidade comercial.
+- campos que devem existir no pedido de compra e subir com eles:
+	- tipo de embalagem
+	- quantidade de sacas
+
++ campos que devem ser mapeados:
+	- U_SPesoRec 	/ Quantity
+	- U_VFat	/ UnitPrice
+
+- quando eu gerar um documento de marketing, tenho que baixar os saldos do contrato final, como sendo:
+	- quando eu gerar um pedido de compra, devo baixar saldo de peso e saldo de sacas.
+	- quando eu gerar uma nota fiscal de entrada, devo baixar saldo financeiro.
+
+/* DEMANDAS COMERCIAIS */
+
+- é necessário uma tela para configuração de utilizações que deverão ser bloqueadas.
+	(utilização que não pode ser utilizada em documentos de marketing sem contrato)
+- criar um campo de usuário para identificar qual é o Item Fiscal relacionado a um Item de Estoque. (GMT - Item Fiscal)

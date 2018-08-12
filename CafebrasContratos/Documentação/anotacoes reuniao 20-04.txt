@@ -1,0 +1,7 @@
+- form de contrato
+	- organizar os campos de valores separados pelo que o que é campo de saldo e o que é campo de valor
+	- trazer somente itens ativos
+	- trazer somente depósitos ativos
+
+- abertura por peneira
+	- implementar o filtro dependendo do tipo de café selecionado no pré contrato

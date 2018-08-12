@@ -1,0 +1,138 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{AA0EA0B2-9216-456D-815B-E094526667AA}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>CafebrasContratos</RootNamespace>
+    <AssemblyName>CafebrasContratos</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Enums\EnumsContratoFinal.cs" />
+    <Compile Include="Enums\EnumsPreContrato.cs" />
+    <Compile Include="Enums\Peneira.cs" />
+    <Compile Include="Estrutura de Dados\TabelaObjectTypes.cs" />
+    <Compile Include="Estrutura de Dados\TabelaConfiguracaoPeneira.cs" />
+    <Compile Include="Estrutura de Dados\TabelasCadastroBasico.cs" />
+    <Compile Include="Estrutura de Dados\TabelasContratoFinal.cs" />
+    <Compile Include="Estrutura de Dados\TabelasPreContrato.cs" />
+    <Compile Include="Estrutura de Dados\CamposTabelaSAP.cs" />
+    <Compile Include="Estrutura de Dados\TabelaGrupoCafe.cs" />
+    <Compile Include="Estrutura de Dados\TabelaParticipante.cs" />
+    <Compile Include="Forms\Cadastros\FormGrupoDeItens.cs" />
+    <Compile Include="Forms\Cadastros\FormParticipante.cs" />
+    <Compile Include="Forms\Cadastros\FormCertificado.cs" />
+    <Compile Include="Forms\Cadastros\FormMetodoFinanceiro.cs" />
+    <Compile Include="Forms\Cadastros\FormUnidadeComercial.cs" />
+    <Compile Include="Forms\Cadastros\FormTipoOperacao.cs" />
+    <Compile Include="Forms\Cadastros\FormSafra.cs" />
+    <Compile Include="Forms\Configuração\FormConfiguracaoPeneira.cs" />
+    <Compile Include="Forms\Contrato Final\FormContratoFinal.cs" />
+    <Compile Include="Forms\Contrato Final\FormContratoFinalAberturaPorPeneira.cs" />
+    <Compile Include="Forms\Contrato Final\FormContratoFinalComissoes.cs" />
+    <Compile Include="Forms\Contrato Final\FormContratoFinalDetalheCertificado.cs" />
+    <Compile Include="Forms\Contrato\GestaoCamposContrato.cs" />
+    <Compile Include="Forms\Contrato\GestaoStatusContrato.cs" />
+    <Compile Include="Forms\Padrão SAP\FormDocumentoMarketing.cs" />
+    <Compile Include="Forms\Padrão SAP\FormPedidoCompra.cs" />
+    <Compile Include="Forms\Padrão SAP\FormUsuarios.cs" />
+    <Compile Include="Forms\Contrato\FormComissoes.cs" />
+    <Compile Include="Forms\Contrato\FormAberturaPorPeneira.cs" />
+    <Compile Include="Forms\Contrato\FormContrato.cs" />
+    <Compile Include="Forms\Contrato\FormDetalheCertificado.cs" />
+    <Compile Include="Forms\Cadastros\FormModalidade.cs" />
+    <Compile Include="Enums\GrupoAprovador.cs" />
+    <Compile Include="Forms\Padrão SAP\PedidoCompraParams.cs" />
+    <Compile Include="Forms\Pré Contrato\FormPreContrato.cs" />
+    <Compile Include="Forms\Pré Contrato\FormPreContratoAberturaPorPeneira.cs" />
+    <Compile Include="Forms\Pré Contrato\FormPreContratoComissoes.cs" />
+    <Compile Include="Forms\Pré Contrato\FormPreContratoDetalheCertificado.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Stored Procedures\PostTransactionNotice.cs" />
+    <Compile Include="Stored Procedures\TransactionNotification.cs" />
+    <Compile Include="Versoes\Versoes.cs" />
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <COMReference Include="SAPbobsCOM">
+      <Guid>{FC8030BE-F5D2-4B8E-8F92-44228FE30090}</Guid>
+      <VersionMajor>9</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>tlbimp</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+    <COMReference Include="SAPbouiCOM">
+      <Guid>{6048236A-956D-498D-A6F1-9C81C13AB6E8}</Guid>
+      <VersionMajor>9</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>tlbimp</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="bin\Debug\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

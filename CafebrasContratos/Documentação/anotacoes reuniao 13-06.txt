@@ -1,0 +1,35 @@
++ Criação de anexos para contrato pai e contrato filho
+
++ alteração no Menu : Contrato Compra de Café
++ alteração no título do form: mesmo do de cima
+
++ formulário de cadastro de pré contrato:
+	+ saldo financeiro = total livre.
+
++ calcular dinamicamente as peneiras
++ possibilitar o inserção de percentual no cadastro do participante e refletir no contrato
+
++ 'data final do contrato não pode ser menor do que a data inicial'
+
++ número de referencia do contrato filho deve ser, o numero do contrato pai + contrato filho incremental
+
++ validar os campos de peneira ao abrir um contrato filho
++ form de contrato filho só pode ser adicionado quando o status pai estiver em estado ok
+
++ adicionar campo de data inicial/ data final
++ remover botão de remover
+
+/** APLICAÇÃO DE STATUS NO CONTRATO PAI **/
+- Trocar o label 'Aberto' para 'Esboço'
+- Criar status 'Encerrado' antes de 'Cancelado'
+- Um contrato em esboço não pode criar Contratos Filhos
++ Um contrato autorizado só será possível alterar data_final, descrição e observações
+- Um contrato autorizado libera a criação de Contratos Filhos
+- Um contrato autorizado, se for voltar para esboço, só poderá voltar se todos os contratos filhos estiveram cancelados ou se não houverem.
+- Um contrato só poderá ser cancelado se todos os contratos filhos estiveram cancelados ou se não houverem.
+- Um contrato encerrado impossibilita a criação de novos contratos filhos.
+
+/** APLICAÇÃO DE STATUS NO CONTRATO FILHO **/
+- Trocar o label 'Aberto' para 'Esboço', 'Fechado' para 'Encerrado' e mudar o índice para antes de Cancelado
+- mesmas regras do contrato pai
+- só pode cancelar contrato filho se todos os documentos relacionados estiverem cancelados.

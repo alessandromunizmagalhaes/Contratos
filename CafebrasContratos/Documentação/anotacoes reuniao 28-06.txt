@@ -1,0 +1,3 @@
++ quando adicionar nova linha de anexo, selecionar linha na matriz
++ quando criar contrato filho, o total livre do contrato filho deve baixar o saldo financeiro do contrato pai.
++ quando um contrato filho for cancelado, os valores de saldo do contrato pai devem ser atualizado ao valor do contrato filho que acabou de ser cancelado

@@ -1,0 +1,14 @@
+- cadastro de contrato
+	+ remover a sugestão de data final
+	+ status deve iniciar como aberto
+	+ Campos 'Valor Faturado' trocar para 'Valor Faturado/Saca'
+	- trocar a ordem do campo 'valor livre' pelo 'valor faturado'
+	+ trocar o nome do campo 'Valor SENAR' por 'Valor SENAR/FUNRURAL'
+	+ nos campos da esquerda, colocar 'quantidade de sacas' e 'quantidade de pesos' como sendo os primeiros, para que o cálculo de totais já aconteça ao preencher os valores
+
+	+ o botão 'detalhes do item' muda para 'abertura por peneira'
+		+ dar um destaque para o botão aumentando a altura
+	+ o botão 'certificado' deve ficar posicionado debaixo dos campos 'taxa dolar'
+	
+- detalhes do item
+	+ não deixar escolher o mesmo item
