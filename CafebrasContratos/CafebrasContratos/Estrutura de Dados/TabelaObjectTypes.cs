@@ -9,41 +9,42 @@ namespace CafebrasContratos
         public Coluna ObjectType { get { return new ColunaVarchar("ObjType", "Tipo de Objeto", 30); } }
         public Coluna Tabela { get { return new ColunaVarchar("Tabela", "Tabela", 30); } }
         public Coluna Origem { get { return new ColunaInt("Origem", "Origem"); } }
+
         List<ObjectTypesValues> data = new List<ObjectTypesValues>() {
             new ObjectTypesValues(){
               ObjectType = ((int)BoObjectTypes.oPurchaseOrders).ToString(),
               NomeTabela = "OPOR",
-              Origem = OrigemDocMarketing.Nenhuma
+              Origem = OrigemDocMarketing.Nenhuma,
                 // pedido de compra
             },
             new ObjectTypesValues(){
               ObjectType = ((int)BoObjectTypes.oPurchaseInvoices).ToString(),
               NomeTabela = "OPCH",
-              Origem = OrigemDocMarketing.DebitaFiscal
+              Origem = OrigemDocMarketing.DebitaFiscal,
                 // nota fiscal de entrada
             },
             new ObjectTypesValues(){
               ObjectType = ((int)BoObjectTypes.oPurchaseDeliveryNotes).ToString(),
               NomeTabela = "OPDN",
-              Origem = OrigemDocMarketing.CreditaEstoque
+              Origem = OrigemDocMarketing.CreditaEstoque,
                 // recebimento de mercadorias
             },
             new ObjectTypesValues(){
               ObjectType = ((int)BoObjectTypes.oPurchaseDownPayments).ToString(),
               NomeTabela = "ODPO",
-              Origem = OrigemDocMarketing.DebitaFiscal
+              Origem = OrigemDocMarketing.DebitaFiscal,
                 // adiantamento a fornecedor
             },
             new ObjectTypesValues(){
               ObjectType = ((int)BoObjectTypes.oPurchaseReturns).ToString(),
               NomeTabela = "ORPD",
-              Origem = OrigemDocMarketing.DebitaEstoque
+              Origem = OrigemDocMarketing.DebitaEstoque,
                 // devolução de mercadorias
             },
             new ObjectTypesValues(){
               ObjectType = ((int)BoObjectTypes.oPurchaseCreditNotes).ToString(),
               NomeTabela = "ORPC",
-              Origem = OrigemDocMarketing.CreditaFiscal
+              Origem = OrigemDocMarketing.CreditaFiscal,
                 // dev. nota fiscal de entrada
             },
         };
@@ -77,6 +78,7 @@ namespace CafebrasContratos
             public string ObjectType { get; set; }
             public string NomeTabela { get; set; }
             public OrigemDocMarketing Origem { get; set; }
+
         }
     }
 

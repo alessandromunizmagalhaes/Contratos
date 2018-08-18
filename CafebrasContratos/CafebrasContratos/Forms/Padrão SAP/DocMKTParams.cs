@@ -1,6 +1,6 @@
 ﻿namespace CafebrasContratos
 {
-    public class PedidoCompraParams
+    public class DocMKTParams
     {
         public string NumContratoFinal { get; set; }
         public string Fornecedor { get; set; }

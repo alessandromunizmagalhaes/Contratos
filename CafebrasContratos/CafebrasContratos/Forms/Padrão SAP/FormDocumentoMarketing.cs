@@ -8,19 +8,29 @@ namespace CafebrasContratos
     {
         public abstract override string FormType { get; }
         public abstract string mainDbDataSource { get; }
-        private const string menuUID = "2305";
+        public abstract BoFormObjectEnum formEnum { get; }
 
         public FormDocumentoMarketing()
         {
             var camposSAP = new CamposTabelaSAP();
             _numeroContratoFinal.ItemUID = camposSAP.numeroContratoFilho.NomeComU_NaFrente;
             _numeroContratoFinal.Datasource = _numeroContratoFinal.ItemUID;
+
+            _qtdSaca.ItemUID = camposSAP.QuantidadeSacas.NomeComU_NaFrente;
+            _qtdSaca.Datasource = _qtdSaca.ItemUID;
+
+            _embalagem.ItemUID = camposSAP.Embalagem.NomeComU_NaFrente;
+            _embalagem.Datasource = _embalagem.ItemUID;
+            _embalagem.SQL = "SELECT PkgCode, PkgType FROM OPKG ORDER BY PkgType";
+
             _filhoDeContrato.Datasource = camposSAP.filhoDeContrato.NomeComU_NaFrente;
         }
 
         #region :: Campos
 
+        public ComboForm _embalagem = new ComboForm();
         public ItemForm _numeroContratoFinal = new ItemForm();
+        public ItemForm _qtdSaca = new ItemForm();
         public ItemForm _filhoDeContrato = new ItemForm()
         {
             ItemUID = "SOContract"
@@ -38,60 +48,100 @@ namespace CafebrasContratos
             using (var formCOM = new FormCOM(FormUID))
             {
                 var form = formCOM.Form;
-
-                var itemRefUID = "46";
-                var itemRef = form.Items.Item(itemRefUID);
-
-                var itemLabelRefUID = "86";
-                var itemLabelRef = form.Items.Item(itemLabelRefUID);
-
-                var editNumeroContratoFinal = form.Items.Add(_numeroContratoFinal.ItemUID, BoFormItemTypes.it_EDIT);
-
-                editNumeroContratoFinal.Enabled = false;
-                editNumeroContratoFinal.FromPane = 0;
-                editNumeroContratoFinal.ToPane = 0;
-
-                editNumeroContratoFinal.SetAutoManagedAttribute(BoAutoManagedAttr.ama_Editable, (int)BoAutoFormMode.afm_All, BoModeVisualBehavior.mvb_False);
-
-                int comboTop = itemRef.Top + 23;
-                editNumeroContratoFinal.Top = comboTop;
-                editNumeroContratoFinal.Left = itemRef.Left;
-                editNumeroContratoFinal.Width = itemRef.Width;
-                editNumeroContratoFinal.DisplayDesc = true;
-
-                ((EditText)editNumeroContratoFinal.Specific).DataBind.SetBound(true, mainDbDataSource, _numeroContratoFinal.Datasource);
-
-                var labelGrupoAprovador = form.Items.Add("L_DocNumCF", BoFormItemTypes.it_STATIC);
-
-                labelGrupoAprovador.FromPane = 0;
-                labelGrupoAprovador.ToPane = 0;
-                labelGrupoAprovador.Top = comboTop;
-                labelGrupoAprovador.Left = itemLabelRef.Left;
-                labelGrupoAprovador.Width = itemLabelRef.Width;
-                labelGrupoAprovador.LinkTo = editNumeroContratoFinal.UniqueID;
-
-                ((StaticText)labelGrupoAprovador.Specific).Caption = "Nº do Contrato";
-
-                var linkedButton = form.Items.Add("B_DocNumCF", BoFormItemTypes.it_LINKED_BUTTON);
-
-                linkedButton.Top = editNumeroContratoFinal.Top - 1;
-                linkedButton.Left = editNumeroContratoFinal.Left - 19;
-                linkedButton.LinkTo = editNumeroContratoFinal.UniqueID;
-
-                ((LinkedButton)linkedButton.Specific).LinkedObject = BoLinkedObject.lf_BusinessPartner;
-
-                var editVeioContrato = form.Items.Add(_filhoDeContrato.ItemUID, BoFormItemTypes.it_EDIT);
-
-                editVeioContrato.Visible = false;
-                editVeioContrato.FromPane = 0;
-                editVeioContrato.ToPane = 0;
-
-                editVeioContrato.Top = editNumeroContratoFinal.Top;
-                editVeioContrato.Left = editNumeroContratoFinal.Left - 120;
-                editVeioContrato.Width = 15;
-
-                ((EditText)editVeioContrato.Specific).DataBind.SetBound(true, mainDbDataSource, _filhoDeContrato.Datasource);
+                CriarEDesenharCampos(form);
+                CriarEDesenharCampoEmbalagem(form);
             }
+        }
+
+        private void CriarEDesenharCampos(SAPbouiCOM.Form form)
+        {
+            var itemRefUID = "46";
+            var itemRef = form.Items.Item(itemRefUID);
+
+            var itemLabelRefUID = "86";
+            var itemLabelRef = form.Items.Item(itemLabelRefUID);
+
+            var editNumeroContratoFinal = form.Items.Add(_numeroContratoFinal.ItemUID, BoFormItemTypes.it_EDIT);
+
+            editNumeroContratoFinal.Enabled = false;
+            editNumeroContratoFinal.FromPane = 0;
+            editNumeroContratoFinal.ToPane = 0;
+
+            editNumeroContratoFinal.SetAutoManagedAttribute(BoAutoManagedAttr.ama_Editable, (int)BoAutoFormMode.afm_All, BoModeVisualBehavior.mvb_False);
+
+            int comboTop = itemRef.Top + 23;
+            editNumeroContratoFinal.Top = comboTop;
+            editNumeroContratoFinal.Left = itemRef.Left;
+            editNumeroContratoFinal.Width = itemRef.Width;
+            editNumeroContratoFinal.DisplayDesc = true;
+
+            ((EditText)editNumeroContratoFinal.Specific).DataBind.SetBound(true, mainDbDataSource, _numeroContratoFinal.Datasource);
+
+            var labelGrupoAprovador = form.Items.Add("L_DocNumCF", BoFormItemTypes.it_STATIC);
+
+            labelGrupoAprovador.FromPane = 0;
+            labelGrupoAprovador.ToPane = 0;
+            labelGrupoAprovador.Top = comboTop;
+            labelGrupoAprovador.Left = itemLabelRef.Left;
+            labelGrupoAprovador.Width = itemLabelRef.Width;
+            labelGrupoAprovador.LinkTo = editNumeroContratoFinal.UniqueID;
+
+            ((StaticText)labelGrupoAprovador.Specific).Caption = "Nº do Contrato";
+
+            var linkedButton = form.Items.Add("B_DocNumCF", BoFormItemTypes.it_LINKED_BUTTON);
+
+            linkedButton.Top = editNumeroContratoFinal.Top - 1;
+            linkedButton.Left = editNumeroContratoFinal.Left - 19;
+            linkedButton.LinkTo = editNumeroContratoFinal.UniqueID;
+
+            ((LinkedButton)linkedButton.Specific).LinkedObject = BoLinkedObject.lf_BusinessPartner;
+
+            var editVeioContrato = form.Items.Add(_filhoDeContrato.ItemUID, BoFormItemTypes.it_EDIT);
+
+            editVeioContrato.Visible = false;
+            editVeioContrato.FromPane = 0;
+            editVeioContrato.ToPane = 0;
+
+            editVeioContrato.Top = editNumeroContratoFinal.Top;
+            editVeioContrato.Left = editNumeroContratoFinal.Left - 120;
+            editVeioContrato.Width = 15;
+
+            ((EditText)editVeioContrato.Specific).DataBind.SetBound(true, mainDbDataSource, _filhoDeContrato.Datasource);
+        }
+
+        private void CriarEDesenharCampoEmbalagem(SAPbouiCOM.Form form)
+        {
+            var itemRefUID = "2034";
+            var itemRef = form.Items.Item(itemRefUID);
+
+            var itemLabelRefUID = "2051";
+            var itemLabelRef = form.Items.Item(itemLabelRefUID);
+
+            var comboEmbalagem = form.Items.Add(_embalagem.ItemUID, BoFormItemTypes.it_COMBO_BOX);
+            const int Pane = 8;
+            comboEmbalagem.FromPane = Pane;
+            comboEmbalagem.ToPane = Pane;
+
+            int comboTop = itemRef.Top + 15;
+            comboEmbalagem.Top = comboTop;
+            comboEmbalagem.Left = itemRef.Left;
+            comboEmbalagem.Width = itemRef.Width;
+            comboEmbalagem.DisplayDesc = true;
+
+            ((ComboBox)comboEmbalagem.Specific).DataBind.SetBound(true, mainDbDataSource, _embalagem.Datasource);
+
+            var labelGrupoAprovador = form.Items.Add("L_Packg", BoFormItemTypes.it_STATIC);
+
+            labelGrupoAprovador.FromPane = Pane;
+            labelGrupoAprovador.ToPane = Pane;
+            labelGrupoAprovador.Top = comboTop;
+            labelGrupoAprovador.Left = itemLabelRef.Left;
+            labelGrupoAprovador.Width = itemLabelRef.Width;
+            labelGrupoAprovador.LinkTo = comboEmbalagem.UniqueID;
+
+            ((StaticText)labelGrupoAprovador.Specific).Caption = "Embalagem";
+
+            _embalagem.Popular(form);
         }
 
         public override void OnBeforeItemPressed(string FormUID, ref ItemEvent pVal, out bool BubbleEvent)
@@ -119,7 +169,7 @@ namespace CafebrasContratos
 
         #region :: Regras de Negócio
 
-        public void PreencherPedido(SAPbouiCOM.Form form, PedidoCompraParams param)
+        public void PreencherPedido(SAPbouiCOM.Form form, DocMKTParams param)
         {
             try
             {
@@ -129,6 +179,7 @@ namespace CafebrasContratos
                 form.Items.Item(_filhoDeContrato.ItemUID).Specific.Value = "S";
                 form.Items.Item("4").Specific.Value = param.Fornecedor;
                 form.Items.Item(_numeroContratoFinal.ItemUID).Enabled = false;
+                ((ComboBox)form.Items.Item(_embalagem.ItemUID).Specific).Select(param.Embalagem, BoSearchKey.psk_ByValue);
 
                 if (!String.IsNullOrEmpty(param.Filial))
                 {
@@ -154,10 +205,10 @@ namespace CafebrasContratos
                 form.Freeze(false);
 
                 ((ComboBox)matrix.Columns.Item("2011").Cells.Item(1).Specific).Select(param.Utilizacao, BoSearchKey.psk_ByValue);
-                matrix.Columns.Item("U_ATL_Tipo_embalagem").Cells.Item(1).Specific.Value = param.Embalagem;
                 matrix.Columns.Item("24").Cells.Item(1).Specific.Value = param.Deposito;
                 matrix.Columns.Item("14").Cells.Item(1).Specific.Value = Helpers.ToString(param.PrecoUnitario);
-                
+                matrix.Columns.Item(_qtdSaca.ItemUID).Cells.Item(1).Specific.Value = Helpers.ToString(param.QuantidadeSacas);
+
                 matrix.Columns.Item("1").Cells.Item(1).Click();
                 form.Items.Item("14").Click();
             }
@@ -173,7 +224,7 @@ namespace CafebrasContratos
 
         public SAPbouiCOM.Form Abrir(string codigo = "")
         {
-            return Global.SBOApplication.OpenForm(BoFormObjectEnum.fo_PurchaseOrder, "DocEntry", codigo);
+            return Global.SBOApplication.OpenForm(formEnum, "DocEntry", codigo);
         }
 
         #endregion

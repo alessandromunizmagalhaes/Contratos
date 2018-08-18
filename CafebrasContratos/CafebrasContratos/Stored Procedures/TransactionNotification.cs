@@ -7,8 +7,10 @@ namespace CafebrasContratos
         public void CriarFuncoes()
         {
             CriarFuncao_NomeTabela();
+            CriarFuncao_CamposOrigemParaUpdate();
             CriarProcedure_AtualizaCampoFalandoQueVeioDoContrato();
             CriarProcedure_AtualizaCodigoContrato();
+            CriarProcedure_AtualizaSaldoContratoFilhoConformeDocMKT();
         }
 
         private void CriarFuncao_NomeTabela()
@@ -32,6 +34,54 @@ namespace CafebrasContratos
             }
         }
 
+        private void CriarFuncao_CamposOrigemParaUpdate()
+        {
+            using (var rsCOM = new RecordSet())
+            {
+                rsCOM.DoQuery(
+                    @"IF OBJECT_ID('dbo.CAMPOSORIGEM') IS NOT NULL
+                        DROP FUNCTION CAMPOSORIGEM;"
+                    );
+
+                rsCOM.DoQuery(
+                    $@"CREATE FUNCTION CAMPOSORIGEM(@ObjectType VARCHAR(255)) 
+	                    RETURNS VARCHAR(200)
+	                    BEGIN
+		                    DECLARE @ORIGEM INT;
+		                    DECLARE @Res VARCHAR(100);
+		                    DECLARE @OPERACAO VARCHAR(3);
+		                    DECLARE @CAMPOS VARCHAR(200);
+		                    SELECT @ORIGEM = U_Origem FROM [@UPD_OBJ_TYPES] WHERE U_ObjType = @ObjectType
+		
+		                    -- Origem debito
+		                    IF @ORIGEM > 0
+		                    BEGIN
+			                    SET @OPERACAO = '+';
+		                    END
+		                    -- Origem credito
+		                    ELSE IF @ORIGEM < 0
+		                    BEGIN
+			                    SET @OPERACAO = '-';
+		                    END
+
+		                    -- Origem Estoque
+		                    IF ABS(@ORIGEM) = 1
+		                    BEGIN
+			                    SET @CAMPOS = 'tb2.U_SPesoRec = tb2.U_SPesoRec __OPERACAO__ tb1.Quantity, tb2.U_SPesoNCT = tb2.U_SPesoNCT __OPERACAO__ tb1.U_QtdSaca';
+		                    END
+		                    -- Origem Fiscal
+		                    ELSE IF ABS(@ORIGEM) = 2
+		                    BEGIN
+			                    SET @CAMPOS = 'tb2.U_SFin = tb2.U_SFin __OPERACAO__ tb1.LineTotal';
+		                    END
+
+		                    SET @Res = REPLACE(@CAMPOS, '__OPERACAO__',@OPERACAO);
+	                    RETURN @Res;
+                    END"
+                        );
+            }
+        }
+
         private void CriarProcedure_AtualizaCodigoContrato()
         {
             using (var rsCOM = new RecordSet())
@@ -50,6 +100,39 @@ namespace CafebrasContratos
 	                        SET @ParmDefinition = N'@DocEntry NVARCHAR(30)';  
 	                        SET @UPDATE = 'UPDATE ' + @Tabela + ' SET U_DocNumCF = NULL WHERE DocEntry = @DocEntry';
 	                        EXECUTE sp_executesql @UPDATE, @ParmDefinition, @DocEntry = @DocEntry
+                        END"
+                        );
+            }
+        }
+
+        private void CriarProcedure_AtualizaSaldoContratoFilhoConformeDocMKT()
+        {
+            using (var rsCOM = new RecordSet())
+            {
+                rsCOM.DoQuery(
+                    $@"IF OBJECT_ID('dbo.AtualizaSaldoContratoConformeDocMkt') IS NOT NULL
+                        DROP PROCEDURE AtualizaSaldoContratoConformeDocMkt;"
+                    );
+
+                rsCOM.DoQuery(
+                    $@"CREATE PROCEDURE dbo.AtualizaSaldoContratoConformeDocMkt @DocEntry NVARCHAR(30), @ObjectType VARCHAR(255)
+                        AS
+                        BEGIN
+	                        DECLARE @UPDATE NVARCHAR(500)
+	                        DECLARE @ParmDefinition nvarchar(100);
+	                        DECLARE @CAMPOS VARCHAR(200) = (SELECT DBO.CAMPOSORIGEM(@ObjectType))
+	                        IF @CAMPOS IS NOT NULL
+	                        BEGIN
+		                        DECLARE @Tabela VARCHAR(50) = (SELECT DBO.NOMETABELA(@ObjectType))
+		                        SET @ParmDefinition = N'@DocEntry NVARCHAR(30)';  
+		                        SET @UPDATE = 'UPDATE tb2 SET ' + @CAMPOS + '
+						                        FROM ' + @Tabela + ' tb0
+						                        INNER JOIN ' + RIGHT(@Tabela,3) + '1' + ' tb1 ON ( tb1.DocEntry = tb0.DocEntry )
+						                        INNER JOIN [@UPD_OCFC] tb2 ON (tb2.U_DocNumCF = tb0.U_DocNumCF)
+						                        WHERE tb0.DocEntry = @DocEntry';
+		                        --SET @UPDATE = 'UPDATE ' + @Tabela + ' SET U_SonOfContract = ''N'' WHERE DocEntry = @DocEntry';
+		                        EXECUTE sp_executesql @UPDATE, @ParmDefinition, @DocEntry = @DocEntry
+	                        END
                         END"
                         );
             }

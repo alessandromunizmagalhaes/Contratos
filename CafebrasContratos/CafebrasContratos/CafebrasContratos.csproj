@@ -71,6 +71,7 @@
     <Compile Include="Forms\Contrato\GestaoCamposContrato.cs" />
     <Compile Include="Forms\Contrato\GestaoStatusContrato.cs" />
     <Compile Include="Forms\Padrão SAP\FormDocumentoMarketing.cs" />
+    <Compile Include="Forms\Padrão SAP\FormNotaFiscalEntrada.cs" />
     <Compile Include="Forms\Padrão SAP\FormPedidoCompra.cs" />
     <Compile Include="Forms\Padrão SAP\FormUsuarios.cs" />
     <Compile Include="Forms\Contrato\FormComissoes.cs" />
@@ -79,7 +80,7 @@
     <Compile Include="Forms\Contrato\FormDetalheCertificado.cs" />
     <Compile Include="Forms\Cadastros\FormModalidade.cs" />
     <Compile Include="Enums\GrupoAprovador.cs" />
-    <Compile Include="Forms\Padrão SAP\PedidoCompraParams.cs" />
+    <Compile Include="Forms\Padrão SAP\DocMKTParams.cs" />
     <Compile Include="Forms\Pré Contrato\FormPreContrato.cs" />
     <Compile Include="Forms\Pré Contrato\FormPreContratoAberturaPorPeneira.cs" />
     <Compile Include="Forms\Pré Contrato\FormPreContratoComissoes.cs" />

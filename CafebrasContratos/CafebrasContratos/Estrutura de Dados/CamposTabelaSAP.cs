@@ -15,5 +15,7 @@ namespace CafebrasContratos
 
         public Coluna numeroContratoFilho = new ColunaVarchar("DocNumCF", "Numero Contrato Final", 50);
         public Coluna filhoDeContrato = new ColunaVarchar("SonOfContract", "Son of Contract", 1, false, "N");
+        public Coluna Embalagem = new ColunaVarchar("Packg", "Embalagem", 50);
+        public Coluna QuantidadeSacas = new ColunaQuantity("QtdSaca", "Quantidade de Sacas");
     }
 }

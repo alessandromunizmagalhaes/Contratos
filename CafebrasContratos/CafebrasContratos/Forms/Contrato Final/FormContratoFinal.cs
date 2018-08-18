@@ -376,6 +376,7 @@ namespace CafebrasContratos
                             var fornecedor = _codigoPN.GetValorDBDatasource<string>(dbdts);
                             var numContratoFinal = _numeroDoContrato.GetValorDBDatasource<string>(dbdts);
                             var transportadora = _transportadora.GetValorDBDatasource<string>(dbdts);
+                            var qtdSacas = _quantidadeDeSacas.GetValorDBDatasource<double>(dbdts);
 
                             var codigoItem = _codigoItem.GetValorDBDatasource<string>(dbdts);
                             var deposito = _deposito.GetValorDBDatasource<string>(dbdts);
@@ -386,21 +387,55 @@ namespace CafebrasContratos
                             var filial = GetFilial(_deposito.GetValorDBDatasource<string>(dbdts));
                             var precoUnitario = _valorFaturado.GetValorDBDatasource<double>(dbdts);
 
-                            var objPedidoCompra = new FormPedidoCompra();
-                            var formPedidoCompra = objPedidoCompra.Abrir();
-                            objPedidoCompra.PreencherPedido(formPedidoCompra, new PedidoCompraParams()
+                            FormDocumentoMarketing objDocMKT = null;
+                            
+                            //popup indicator é o indice do combo do botão que foi selecionado. 0-based.
+                            switch (pVal.PopUpIndicator)
                             {
-                                NumContratoFinal = numContratoFinal,
-                                Fornecedor = fornecedor,
-                                Item = codigoItem,
-                                Utilizacao = utilizacao,
-                                Transportadora = transportadora,
-                                Embalagem = embalagem,
-                                Deposito = deposito,
-                                Quantidade = quantidade,
-                                PrecoUnitario = precoUnitario,
-                                Filial = filial
-                            });
+                                case 0:
+                                    objDocMKT = new FormPedidoCompra();
+                                    break;
+                                case 1:
+                                    objDocMKT = new FormPedidoCompra();
+                                    break;
+                                case 2:
+                                    objDocMKT = new FormPedidoCompra();
+                                    break;
+                                case 3:
+                                    objDocMKT = new FormPedidoCompra();
+                                    break;
+                                case 4:
+                                    objDocMKT = new FormNotaFiscalEntrada();
+                                    break;
+                                case 5:
+                                    objDocMKT = new FormPedidoCompra();
+                                    break;
+                                default:
+                                    objDocMKT = new FormPedidoCompra();
+                                    break;
+                            }
+                            if (objDocMKT != null)
+                            {
+                                var formDocMKT = objDocMKT.Abrir();
+                                objDocMKT.PreencherPedido(formDocMKT, new DocMKTParams()
+                                {
+                                    NumContratoFinal = numContratoFinal,
+                                    Fornecedor = fornecedor,
+                                    Item = codigoItem,
+                                    Utilizacao = utilizacao,
+                                    Transportadora = transportadora,
+                                    Embalagem = embalagem,
+                                    Deposito = deposito,
+                                    Quantidade = quantidade,
+                                    PrecoUnitario = precoUnitario,
+                                    Filial = filial,
+                                    QuantidadeSacas = qtdSacas
+                                }); 
+                            }
+                            else
+                            {
+                                Dialogs.PopupInfo("Tipo de Documento não suportado no momento.");
+                            }
                         }
                     }
                     else

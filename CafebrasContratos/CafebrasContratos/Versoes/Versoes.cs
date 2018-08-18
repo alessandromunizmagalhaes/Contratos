@@ -36,8 +36,13 @@ namespace CafebrasContratos
             var camposSAP = new CamposTabelaSAP();
 
             db.CriarCampo("OUSR", camposSAP.grupoAprovador);
-            db.CriarCampo("OPOR", camposSAP.numeroContratoFilho);
-            db.CriarCampo("OPOR", camposSAP.filhoDeContrato);
+
+            const string tabelaOPOR = "OPOR";
+
+            db.CriarCampo(tabelaOPOR, camposSAP.numeroContratoFilho);
+            db.CriarCampo(tabelaOPOR, camposSAP.filhoDeContrato);
+            db.CriarCampo(tabelaOPOR, camposSAP.Embalagem);
+            db.CriarCampo("POR1", camposSAP.QuantidadeSacas);
 
             Dialogs.Info($"Atualizando procedimentos armazenados...");
 
