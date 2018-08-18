@@ -396,7 +396,7 @@ namespace CafebrasContratos
                                     objDocMKT = new FormPedidoCompra();
                                     break;
                                 case 1:
-                                    objDocMKT = new FormPedidoCompra();
+                                    objDocMKT = new FormAdiantamentoFornecedor();
                                     break;
                                 case 2:
                                     objDocMKT = new FormPedidoCompra();
@@ -569,8 +569,14 @@ namespace CafebrasContratos
             try
             {
                 form.Freeze(true);
-                dt.ExecuteQuery(
-                    $@"SELECT 
+
+                var sql = string.Empty;
+                int i = 0;
+                var listaDeTabelas = new TabelaObjectTypes().data;
+                foreach (var tabela in listaDeTabelas)
+                {
+                    i++;
+                    sql += $@"SELECT 
 	                    ObjType as Tipo
 	                    , tb0.DocEntry
 	                    , tb0.DocStatus
@@ -579,15 +585,23 @@ namespace CafebrasContratos
 	                    , tb1.Dscription
 	                    , tb1.Quantity
 	                    , tb0.DocTotal 
-                    FROM OPOR tb0
+                    FROM {tabela.NomeTabela} tb0
                     INNER JOIN (
 	                    SELECT 
 		                    DocEntry, ItemCode, Dscription, Quantity, ROW_NUMBER() OVER ( PARTITION BY DocEntry ORDER BY DocEntry ) as count
-	                    FROM POR1
+	                    FROM {tabela.NomeTabela.Substring(1,3) + "1"}
                     )  tb1 ON (tb1.DocEntry = tb0.DocEntry AND tb1.count = 1)
                     WHERE 1 = 1 
-	                    AND tb0.U_DocNumCF = '{numeroContrato}'"
-                    );
+	                    AND tb0.U_DocNumCF = '{numeroContrato}'
+                    ";
+
+                    if(i < listaDeTabelas.Count)
+                    {
+                        sql += " UNION ALL ";
+                    }
+                }
+
+                dt.ExecuteQuery(sql);
 
                 var mtx = GetMatrix(form, _matrizDocumentos.ItemUID);
                 mtx.LoadFromDataSource();

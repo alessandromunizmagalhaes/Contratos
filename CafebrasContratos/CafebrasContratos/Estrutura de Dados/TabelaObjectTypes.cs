@@ -10,7 +10,7 @@ namespace CafebrasContratos
         public Coluna Tabela { get { return new ColunaVarchar("Tabela", "Tabela", 30); } }
         public Coluna Origem { get { return new ColunaInt("Origem", "Origem"); } }
 
-        List<ObjectTypesValues> data = new List<ObjectTypesValues>() {
+        public List<ObjectTypesValues> data = new List<ObjectTypesValues>() {
             new ObjectTypesValues(){
               ObjectType = ((int)BoObjectTypes.oPurchaseOrders).ToString(),
               NomeTabela = "OPOR",
@@ -73,7 +73,7 @@ namespace CafebrasContratos
             }
         }
 
-        class ObjectTypesValues
+        public class ObjectTypesValues
         {
             public string ObjectType { get; set; }
             public string NomeTabela { get; set; }

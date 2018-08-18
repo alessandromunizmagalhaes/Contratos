@@ -71,6 +71,7 @@
     <Compile Include="Forms\Contrato\GestaoCamposContrato.cs" />
     <Compile Include="Forms\Contrato\GestaoStatusContrato.cs" />
     <Compile Include="Forms\Padrão SAP\FormDocumentoMarketing.cs" />
+    <Compile Include="Forms\Padrão SAP\FormAdiantamentoFornecedor.cs" />
     <Compile Include="Forms\Padrão SAP\FormNotaFiscalEntrada.cs" />
     <Compile Include="Forms\Padrão SAP\FormPedidoCompra.cs" />
     <Compile Include="Forms\Padrão SAP\FormUsuarios.cs" />

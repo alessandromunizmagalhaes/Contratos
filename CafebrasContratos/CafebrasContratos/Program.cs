@@ -173,12 +173,14 @@ namespace CafebrasContratos
                 var formUsuarios = new FormUsuarios();
                 var formPedidoCompra = new FormPedidoCompra();
                 var formNotaFiscalEntrada = new FormNotaFiscalEntrada();
+                var formAdiantamentoFornecedores = new FormAdiantamentoFornecedor();
 
                 var formsPadraoSAP = new List<SAPHelper.Form>()
                 {
                     formUsuarios,
                     formPedidoCompra,
-                    formNotaFiscalEntrada
+                    formNotaFiscalEntrada,
+                    formAdiantamentoFornecedores
                 };
 
                 #endregion

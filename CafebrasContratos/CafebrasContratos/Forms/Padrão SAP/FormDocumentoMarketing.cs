@@ -222,7 +222,7 @@ namespace CafebrasContratos
             }
         }
 
-        public SAPbouiCOM.Form Abrir(string codigo = "")
+        public virtual SAPbouiCOM.Form Abrir(string codigo = "")
         {
             return Global.SBOApplication.OpenForm(formEnum, "DocEntry", codigo);
         }
