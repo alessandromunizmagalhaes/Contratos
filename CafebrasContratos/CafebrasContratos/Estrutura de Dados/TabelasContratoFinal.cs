@@ -65,6 +65,42 @@ namespace CafebrasContratos
         }
     }
 
+    public class TabelaDadosRetiradaDoContratoFinal : Tabela
+    {
+        public Coluna Data { get { return new ColunaDate("Data", "Data"); } }
+        public Coluna NumeroNF { get { return new ColunaVarchar("NumNF", "Numero NF", 100); } }
+        public Coluna SacasNF { get { return new ColunaQuantity("SacasNF", "Sacas NF"); } }
+        public Coluna PesoNF { get { return new ColunaQuantity("PesoNF", "Peso NF"); } }
+        public Coluna ValorNF { get { return new ColunaPrice("ValorNF", "Valor NF"); } }
+        public Coluna Peso { get { return new ColunaQuantity("Peso", "Peso Retirada"); } }  
+        public Coluna TipoEmbalagem { get { return new ColunaVarchar("TipoEmb", "Tipo Embalagem", 30); } }
+        public Coluna QtdEmbalagem { get { return new ColunaQuantity("QtdEmb", "Qtd Embalagem"); } }
+        public Coluna PesoEmbalagem { get { return new ColunaQuantity("PesoEmb", "Peso Embalagem"); } }
+        public Coluna PesoLiquido { get { return new ColunaQuantity("PesoLiq", "Peso Liquido"); } }
+        public Coluna Quebra { get { return new ColunaQuantity("Quebra", "Quebra/Acrescimo"); } }
+        public Coluna TipoDocumento { get { return new ColunaVarchar("TipoDoc", "Tipo Documento", 3); } }
+        public Coluna NumeroDocumento { get { return new ColunaVarchar("NumDoc", "Numero Documento", 50); } }
+
+        public TabelaDadosRetiradaDoContratoFinal() : base("UPD_CFC6", "Dados Retirada Contrato F", BoUTBTableType.bott_MasterDataLines)
+        {
+
+        }
+    }
+
+    public class TabelaPrevisaoEntregaDoContratoFinal : Tabela
+    {
+        public Coluna Data { get { return new ColunaDate("Data", "Data"); } }
+        public Coluna Peso { get { return new ColunaQuantity("Peso", "Peso Total"); } }
+        public Coluna ValorUnitario { get { return new ColunaPrice("ValorUni", "Valor Unitario"); } }
+        public Coluna Sacas60 { get { return new ColunaQuantity("Sacas60", "Sacas/60"); } }
+        public Coluna ValorTotal { get { return new ColunaPrice("ValorTot", "Valor Total"); } }
+
+        public TabelaPrevisaoEntregaDoContratoFinal() : base("UPD_CFC7", "Previsao Entrega Contrato F", BoUTBTableType.bott_MasterDataLines)
+        {
+
+        }
+    }
+
 
     #endregion
 
@@ -240,6 +276,8 @@ namespace CafebrasContratos
                     , new TabelaResponsaveisDoContratoFinal()
                     , new TabelaCertificadosDoContratoFinal()
                     , new TabelaAnexosDoContratoFinal()
+                    , new TabelaDadosRetiradaDoContratoFinal()
+                    , new TabelaPrevisaoEntregaDoContratoFinal()
                 }
             )
         {
