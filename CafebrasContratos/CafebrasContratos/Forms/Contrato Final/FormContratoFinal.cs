@@ -388,30 +388,34 @@ namespace CafebrasContratos
                             var precoUnitario = _valorFaturado.GetValorDBDatasource<double>(dbdts);
 
                             FormDocumentoMarketing objDocMKT = null;
-                            
+                            var formIsAssociated = false;
+
                             //popup indicator é o indice do combo do botão que foi selecionado. 0-based.
                             switch (pVal.PopUpIndicator)
                             {
                                 case 0:
                                     objDocMKT = new FormPedidoCompra();
+                                    formIsAssociated = false;
                                     break;
                                 case 1:
                                     objDocMKT = new FormAdiantamentoFornecedor();
+                                    formIsAssociated = false;
                                     break;
                                 case 2:
-                                    objDocMKT = new FormPedidoCompra();
+                                    formIsAssociated = true;
                                     break;
                                 case 3:
-                                    objDocMKT = new FormPedidoCompra();
+                                    formIsAssociated = true;
                                     break;
                                 case 4:
                                     objDocMKT = new FormNotaFiscalEntrada();
+                                    formIsAssociated = false;
                                     break;
                                 case 5:
-                                    objDocMKT = new FormPedidoCompra();
+                                    formIsAssociated = true;
                                     break;
                                 default:
-                                    objDocMKT = new FormPedidoCompra();
+                                    formIsAssociated = false;
                                     break;
                             }
                             if (objDocMKT != null)
@@ -431,6 +435,10 @@ namespace CafebrasContratos
                                     Filial = filial,
                                     QuantidadeSacas = qtdSacas
                                 }); 
+                            }
+                            else if(formIsAssociated)
+                            {
+                                FormSelecaoDocMKT.AbrirForm(FormUID);
                             }
                             else
                             {

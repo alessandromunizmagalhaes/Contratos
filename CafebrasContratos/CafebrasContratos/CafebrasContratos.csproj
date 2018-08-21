@@ -65,6 +65,7 @@
     <Compile Include="Forms\Cadastros\FormSafra.cs" />
     <Compile Include="Forms\Configuração\FormConfiguracaoPeneira.cs" />
     <Compile Include="Forms\Contrato Final\FormContratoFinal.cs" />
+    <Compile Include="Forms\Contrato Final\FormSelecaoDocMKT.cs" />
     <Compile Include="Forms\Contrato Final\FormContratoFinalAberturaPorPeneira.cs" />
     <Compile Include="Forms\Contrato Final\FormContratoFinalComissoes.cs" />
     <Compile Include="Forms\Contrato Final\FormContratoFinalDetalheCertificado.cs" />

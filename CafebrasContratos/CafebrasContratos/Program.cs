@@ -166,10 +166,13 @@ namespace CafebrasContratos
                      formContratoFinalComissoes
                 };
 
+                var formSelecaoDocMKT = new FormSelecaoDocMKT();
+
                 #endregion
 
 
                 #region :: Form SAP
+
                 var formUsuarios = new FormUsuarios();
                 var formPedidoCompra = new FormPedidoCompra();
                 var formNotaFiscalEntrada = new FormNotaFiscalEntrada();
@@ -188,7 +191,7 @@ namespace CafebrasContratos
 
                 #region :: Grupos de Forms
 
-                var formsVisible = new List<SAPHelper.Form>() { formPreContrato, formContratoFinal };
+                var formsVisible = new List<SAPHelper.Form>() { formPreContrato, formContratoFinal, formSelecaoDocMKT };
                 formsVisible.AddRange(formsCadastroBasico);
                 formsVisible.AddRange(formsDetalheContrato);
 
@@ -258,7 +261,8 @@ namespace CafebrasContratos
                         formContratoFinalComissoes,
                         formGrupoDeItens,
                         formConfiguracaoPeneira,
-                        formPedidoCompra
+                        formPedidoCompra,
+                        formSelecaoDocMKT
                     }),
                     new MapEventsToForms(BoEventTypes.et_MATRIX_LINK_PRESSED, new List<SAPHelper.Form>(){
                         formPreContrato,
