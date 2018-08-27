@@ -1,5 +1,6 @@
 ﻿using SAPHelper;
 using SAPbouiCOM;
+using System;
 
 namespace CafebrasContratos
 {

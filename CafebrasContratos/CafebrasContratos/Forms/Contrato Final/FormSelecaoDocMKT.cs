@@ -20,6 +20,10 @@ namespace CafebrasContratos
             ItemUID = "matrix",
             Datasource = "Documentos"
         };
+        public ButtonForm _botaoCopiar = new ButtonForm()
+        {
+            ItemUID = "btnCopy"
+        };
 
         public override void OnAfterFormVisible(string FormUID, ref ItemEvent pVal, out bool BubbleEvent)
         {
@@ -51,13 +55,37 @@ namespace CafebrasContratos
             }
         }
 
+        public override void OnAfterItemPressed(string FormUID, ref ItemEvent pVal, out bool BubbleEvent)
+        {
+            BubbleEvent = true;
+            if (pVal.ItemUID == _botaoCopiar.ItemUID)
+            {
+                using (var formCOM = new FormCOM(FormUID))
+                {
+                    var form = formCOM.Form;
+
+                    var mtx = GetMatrix(form, _matrizDocumentos.ItemUID);
+                    int row = mtx.GetNextSelectedRow();
+                    if (row > 0)
+                    {
+                        var codigoDocSelecionado = mtx.GetCellSpecific(_matrizDocumentos.Codigo.ItemUID, row).Value;
+                        FormPedidoCompra formTipoBase = new FormPedidoCompra();
+                        var formBase = formTipoBase.Abrir(codigoDocSelecionado);
+                        formTipoBase.CopiarPara(formBase);
+                    }
+                    else
+                    {
+                        Dialogs.PopupError("Selecione uma linha da matriz para escolher um documento base.");
+                    }
+                } 
+            }
+        }
 
         public static void AbrirForm(string fatherFormUID)
         {
             CriarFormFilho(AppDomain.CurrentDomain.BaseDirectory + SRF, fatherFormUID, new FormSelecaoDocMKT());
         }
-
-
+        
         public void AtualizarMatriz(SAPbouiCOM.Form form)
         {
             var dt = GetDatatable(form, _matrizDocumentos.Datasource);
@@ -89,6 +117,7 @@ namespace CafebrasContratos
                 )  tb1 ON (tb1.DocEntry = tb0.DocEntry AND tb1.count = 1)
                 WHERE 1 = 1 
 	                AND tb0.U_DocNumCF = '{numeroContrato}'
+                    AND tb0.DocStatus = 'O'
                 ";
 
                 dt.ExecuteQuery(sql);
@@ -103,8 +132,7 @@ namespace CafebrasContratos
                 form.Freeze(false);
             }
         }
-
-
+        
         public class MatrizDTDocumentos : MatrizDatatable
         {
             public ItemForm TipoDocumento = new ItemForm()

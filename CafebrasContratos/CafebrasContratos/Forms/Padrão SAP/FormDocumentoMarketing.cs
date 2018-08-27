@@ -176,7 +176,7 @@ namespace CafebrasContratos
                 form.Freeze(true);
                 form.Mode = BoFormMode.fm_ADD_MODE;
                 form.Items.Item(_numeroContratoFinal.ItemUID).Specific.Value = param.NumContratoFinal;
-                form.Items.Item(_filhoDeContrato.ItemUID).Specific.Value = "S";
+                AtualizarCampoFalandoQueVeioDeContrato(form);
                 form.Items.Item("4").Specific.Value = param.Fornecedor;
                 form.Items.Item(_numeroContratoFinal.ItemUID).Enabled = false;
                 ((ComboBox)form.Items.Item(_embalagem.ItemUID).Specific).Select(param.Embalagem, BoSearchKey.psk_ByValue);
@@ -222,9 +222,33 @@ namespace CafebrasContratos
             }
         }
 
+        protected void AtualizarCampoFalandoQueVeioDeContrato(SAPbouiCOM.Form form)
+        {
+            form.Items.Item(_filhoDeContrato.ItemUID).Specific.Value = "S";
+        }
+
         public virtual SAPbouiCOM.Form Abrir(string codigo = "")
         {
             return Global.SBOApplication.OpenForm(formEnum, "DocEntry", codigo);
+        }
+
+        public void CopiarPara(SAPbouiCOM.Form formDe)
+        {
+            try
+            {
+                formDe.Freeze(true);
+                var botaoSelecao = (ComboBox)formDe.Items.Item("10000329").Specific;
+                botaoSelecao.Select(0, BoSearchKey.psk_Index);
+            }
+            catch (Exception e)
+            {
+                Dialogs.PopupError("Erro interno. Erro ao copiar documento base para documento destino. Erro: " + e.Message);
+            }
+            finally
+            {
+                formDe.Freeze(false);
+                formDe.Close();
+            }
         }
 
         #endregion

@@ -74,6 +74,7 @@
     <Compile Include="Forms\Padrão SAP\FormDocumentoMarketing.cs" />
     <Compile Include="Forms\Padrão SAP\FormAdiantamentoFornecedor.cs" />
     <Compile Include="Forms\Padrão SAP\FormNotaFiscalEntrada.cs" />
+    <Compile Include="Forms\Padrão SAP\FormRecebimentoMercadoria.cs" />
     <Compile Include="Forms\Padrão SAP\FormPedidoCompra.cs" />
     <Compile Include="Forms\Padrão SAP\FormUsuarios.cs" />
     <Compile Include="Forms\Contrato\FormComissoes.cs" />
@@ -91,6 +92,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Stored Procedures\PostTransactionNotice.cs" />
     <Compile Include="Stored Procedures\TransactionNotification.cs" />
+    <Compile Include="Tipos de Objeto\TipoDeObjeto.cs" />
     <Compile Include="Versoes\Versoes.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
