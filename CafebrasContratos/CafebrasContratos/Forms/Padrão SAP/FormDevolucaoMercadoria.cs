@@ -4,11 +4,11 @@ using System;
 
 namespace CafebrasContratos
 {
-    public class FormRecebimentoMercadoria : FormDocumentoMarketing
+    public class FormDevolucaoMercadoria : FormDocumentoMarketing
     {
-        public override string FormType { get { return ((int)FormTypes.RecebimentoDeMercadoria).ToString(); } }
-        public override string mainDbDataSource { get { return "OPDN"; } }
-        public override BoFormObjectEnum formEnum { get { return BoFormObjectEnum.fo_DeliveryNotes; } }
+        public override string FormType { get { return ((int)FormTypes.DevolucaoDeMercadoria).ToString(); } }
+        public override string mainDbDataSource { get { return "ORPD"; } }
+        public override BoFormObjectEnum formEnum { get { return BoFormObjectEnum.fo_DeliveryNotesReturns; } }
 
         public override void OnAfterFormLoad(string FormUID, ref ItemEvent pVal, out bool BubbleEvent)
         {
@@ -29,10 +29,10 @@ namespace CafebrasContratos
                 }
             }
         }
-
+        
         public override SAPbouiCOM.Form Abrir(string codigo = "")
         {
-            return AbrirNaMao("2306", codigo);
+            return AbrirNaMao("2307", codigo);
         }
     }
 }

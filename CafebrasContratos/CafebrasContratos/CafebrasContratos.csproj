@@ -71,9 +71,11 @@
     <Compile Include="Forms\Contrato Final\FormContratoFinalDetalheCertificado.cs" />
     <Compile Include="Forms\Contrato\GestaoCamposContrato.cs" />
     <Compile Include="Forms\Contrato\GestaoStatusContrato.cs" />
+    <Compile Include="Forms\Padrão SAP\FormDevNotaFiscalEntrada.cs" />
     <Compile Include="Forms\Padrão SAP\FormDocumentoMarketing.cs" />
     <Compile Include="Forms\Padrão SAP\FormAdiantamentoFornecedor.cs" />
     <Compile Include="Forms\Padrão SAP\FormNotaFiscalEntrada.cs" />
+    <Compile Include="Forms\Padrão SAP\FormDevolucaoMercadoria.cs" />
     <Compile Include="Forms\Padrão SAP\FormRecebimentoMercadoria.cs" />
     <Compile Include="Forms\Padrão SAP\FormPedidoCompra.cs" />
     <Compile Include="Forms\Padrão SAP\FormUsuarios.cs" />
@@ -92,7 +94,14 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Stored Procedures\PostTransactionNotice.cs" />
     <Compile Include="Stored Procedures\TransactionNotification.cs" />
-    <Compile Include="Tipos de Objeto\TipoDeObjeto.cs" />
+    <Compile Include="Tipos de Objeto\HandlerTipoDeObjeto.cs" />
+    <Compile Include="Tipos de Objeto\TipoDevNotaFiscalEntrada.cs" />
+    <Compile Include="Tipos de Objeto\TipoDevolucaoDeMercadorias.cs" />
+    <Compile Include="Tipos de Objeto\TipoDeObjetoDeContrato.cs" />
+    <Compile Include="Tipos de Objeto\TipoAdiantamentoAFornecedor.cs" />
+    <Compile Include="Tipos de Objeto\TipoRecebimentoDeMercadorias.cs" />
+    <Compile Include="Tipos de Objeto\TipoNotaFiscalEntrada.cs" />
+    <Compile Include="Tipos de Objeto\TipoPedidoDeCompra.cs" />
     <Compile Include="Versoes\Versoes.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

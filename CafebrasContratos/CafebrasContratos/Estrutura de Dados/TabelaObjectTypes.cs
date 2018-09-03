@@ -26,19 +26,19 @@ namespace CafebrasContratos
             new ObjectTypesValues(){
               ObjectType = ((int)BoObjectTypes.oPurchaseDeliveryNotes).ToString(),
               NomeTabela = "OPDN",
-              Origem = OrigemDocMarketing.CreditaEstoque,
+              Origem = OrigemDocMarketing.DebitaEstoque,
                 // recebimento de mercadorias
             },
             new ObjectTypesValues(){
               ObjectType = ((int)BoObjectTypes.oPurchaseDownPayments).ToString(),
               NomeTabela = "ODPO",
-              Origem = OrigemDocMarketing.DebitaFiscal,
+              Origem = OrigemDocMarketing.CreditaFiscal,
                 // adiantamento a fornecedor
             },
             new ObjectTypesValues(){
               ObjectType = ((int)BoObjectTypes.oPurchaseReturns).ToString(),
               NomeTabela = "ORPD",
-              Origem = OrigemDocMarketing.DebitaEstoque,
+              Origem = OrigemDocMarketing.CreditaEstoque,
                 // devolução de mercadorias
             },
             new ObjectTypesValues(){

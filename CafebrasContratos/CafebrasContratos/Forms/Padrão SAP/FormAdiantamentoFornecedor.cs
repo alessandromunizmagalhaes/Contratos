@@ -1,5 +1,6 @@
 ﻿using SAPHelper;
 using SAPbouiCOM;
+using System;
 
 namespace CafebrasContratos
 {
@@ -12,12 +13,10 @@ namespace CafebrasContratos
         // setando qualquer um só pq essa propriedade tem abstract e precisa ser informada
         // sobrepondo o método que usa ela pra não atrapalhar quem já usa.
         public override BoFormObjectEnum formEnum { get { return BoFormObjectEnum.fo_CashDiscount; } }
-
+        
         public override SAPbouiCOM.Form Abrir(string codigo = "")
         {
-            Global.SBOApplication.ActivateMenuItem("2317");
-            var form = Global.SBOApplication.Forms.GetFormByTypeAndCount((int)FormTypes.AdiantamentoFornecedor, -1);
-            return form;
+            return AbrirNaMao("2317", codigo);
         }
     }
 }

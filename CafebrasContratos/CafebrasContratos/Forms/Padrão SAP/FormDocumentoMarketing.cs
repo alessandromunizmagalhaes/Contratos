@@ -169,7 +169,7 @@ namespace CafebrasContratos
 
         #region :: Regras de Negócio
 
-        public void PreencherPedido(SAPbouiCOM.Form form, DocMKTParams param)
+        public void PreencherDocumento(SAPbouiCOM.Form form, DocMKTParams param)
         {
             try
             {
@@ -232,10 +232,36 @@ namespace CafebrasContratos
             return Global.SBOApplication.OpenForm(formEnum, "DocEntry", codigo);
         }
 
+        public virtual SAPbouiCOM.Form AbrirNaMao(string menuUID, string codigo = "")
+        {
+            Global.SBOApplication.ActivateMenuItem(menuUID);
+            var form = Global.SBOApplication.Forms.GetFormByTypeAndCount(Int32.Parse(FormType), -1);
+            if (!string.IsNullOrEmpty(codigo))
+            {
+                try
+                {
+                    form.Freeze(true);
+                    form.Mode = BoFormMode.fm_FIND_MODE;
+                    form.Items.Item("8").Specific.Value = codigo;
+                    form.Items.Item("1").Click();
+                }
+                catch (Exception e)
+                {
+                    Dialogs.PopupError("erro ao encontrar registro. Erro " + e.Message);
+                }
+                finally
+                {
+                    form.Freeze(false);
+                }
+            }
+            return form;
+        }
+
         public void CopiarPara(SAPbouiCOM.Form formDe)
         {
             try
             {
+                Dialogs.Info("Aguarde...");
                 formDe.Freeze(true);
                 var botaoSelecao = (ComboBox)formDe.Items.Item("10000329").Specific;
                 botaoSelecao.Select(0, BoSearchKey.psk_Index);

@@ -178,6 +178,8 @@ namespace CafebrasContratos
                 var formNotaFiscalEntrada = new FormNotaFiscalEntrada();
                 var formAdiantamentoFornecedores = new FormAdiantamentoFornecedor();
                 var formRecebimentoMercadoria = new FormRecebimentoMercadoria();
+                var formDevolucaoMercadoria = new FormDevolucaoMercadoria();
+                var formDevNotaFiscalEntrada = new FormDevNotaFiscalEntrada();
 
                 var formsPadraoSAP = new List<SAPHelper.Form>()
                 {
@@ -185,7 +187,9 @@ namespace CafebrasContratos
                     formPedidoCompra,
                     formNotaFiscalEntrada,
                     formAdiantamentoFornecedores,
-                    formRecebimentoMercadoria
+                    formRecebimentoMercadoria,
+                    formDevolucaoMercadoria,
+                    formDevNotaFiscalEntrada
                 };
 
                 #endregion

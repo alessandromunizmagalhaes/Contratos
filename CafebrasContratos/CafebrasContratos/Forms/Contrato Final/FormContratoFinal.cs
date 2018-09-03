@@ -2,6 +2,7 @@
 using SAPHelper;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace CafebrasContratos
 {
@@ -114,6 +115,14 @@ namespace CafebrasContratos
 
         }
 
+        public FormContratoFinal()
+        {
+            foreach (var tipo in new HandlerTipoDeObjeto()._tiposDeObjetoDeContratos.OrderBy(t => t.IndexParaCombo))
+            {
+                _botaoComboCopiar.ValoresPadrao.Add(tipo.IndexParaCombo.ToString(), tipo.Nome);
+            }
+        }
+
         #endregion
 
 
@@ -158,14 +167,7 @@ namespace CafebrasContratos
         private ComboForm _botaoComboCopiar = new ComboForm()
         {
             ItemUID = "btnCopiar",
-            ValoresPadrao = new Dictionary<string, string>() {
-                {"1","Pedido de Compra"},
-                {"2","Adiantamento para Fornecedor"},
-                {"3","Recebimento de Mercadoria"},
-                {"4","Devolução de Mercadoria"},
-                {"5","Nota Fiscal de Entrada"},
-                {"6","Devolução de Nota Fiscal de Entrada"},
-            }
+            ValoresPadrao = new Dictionary<string, string>() { }
         };
         private static bool _adicionou = false;
 
@@ -372,56 +374,26 @@ namespace CafebrasContratos
                     {
                         using (var dbdtsCOM = new DBDatasourceCOM(form, MainDbDataSource))
                         {
-                            var dbdts = dbdtsCOM.Dbdts;
-                            var fornecedor = _codigoPN.GetValorDBDatasource<string>(dbdts);
-                            var numContratoFinal = _numeroDoContrato.GetValorDBDatasource<string>(dbdts);
-                            var transportadora = _transportadora.GetValorDBDatasource<string>(dbdts);
-                            var qtdSacas = _quantidadeDeSacas.GetValorDBDatasource<double>(dbdts);
-
-                            var codigoItem = _codigoItem.GetValorDBDatasource<string>(dbdts);
-                            var deposito = _deposito.GetValorDBDatasource<string>(dbdts);
-                            var utilizacao = _utilizacao.GetValorDBDatasource<string>(dbdts);
-                            var safra = _safra.GetValorDBDatasource<string>(dbdts);
-                            var embalagem = _embalagem.GetValorDBDatasource<string>(dbdts);
-                            var quantidade = _saldoDePeso.GetValorDBDatasource<double>(dbdts);
-                            var filial = GetFilial(_deposito.GetValorDBDatasource<string>(dbdts));
-                            var precoUnitario = _valorFaturado.GetValorDBDatasource<double>(dbdts);
-
-                            FormDocumentoMarketing objDocMKT = null;
-                            var formIsAssociated = false;
-
-                            //popup indicator é o indice do combo do botão que foi selecionado. 0-based.
-                            switch (pVal.PopUpIndicator)
+                            var tipoObjeto = new HandlerTipoDeObjeto().GetByIndex(pVal.PopUpIndicator);
+                            if(tipoObjeto.ObjetoBase == null)
                             {
-                                case 0:
-                                    objDocMKT = new FormPedidoCompra();
-                                    formIsAssociated = false;
-                                    break;
-                                case 1:
-                                    objDocMKT = new FormAdiantamentoFornecedor();
-                                    formIsAssociated = false;
-                                    break;
-                                case 2:
-                                    formIsAssociated = true;
-                                    break;
-                                case 3:
-                                    formIsAssociated = true;
-                                    break;
-                                case 4:
-                                    objDocMKT = new FormNotaFiscalEntrada();
-                                    formIsAssociated = false;
-                                    break;
-                                case 5:
-                                    formIsAssociated = true;
-                                    break;
-                                default:
-                                    formIsAssociated = false;
-                                    break;
-                            }
-                            if (objDocMKT != null)
-                            {
-                                var formDocMKT = objDocMKT.Abrir();
-                                objDocMKT.PreencherPedido(formDocMKT, new DocMKTParams()
+                                var dbdts = dbdtsCOM.Dbdts;
+                                var fornecedor = _codigoPN.GetValorDBDatasource<string>(dbdts);
+                                var numContratoFinal = _numeroDoContrato.GetValorDBDatasource<string>(dbdts);
+                                var transportadora = _transportadora.GetValorDBDatasource<string>(dbdts);
+                                var qtdSacas = _quantidadeDeSacas.GetValorDBDatasource<double>(dbdts);
+
+                                var codigoItem = _codigoItem.GetValorDBDatasource<string>(dbdts);
+                                var deposito = _deposito.GetValorDBDatasource<string>(dbdts);
+                                var utilizacao = _utilizacao.GetValorDBDatasource<string>(dbdts);
+                                var safra = _safra.GetValorDBDatasource<string>(dbdts);
+                                var embalagem = _embalagem.GetValorDBDatasource<string>(dbdts);
+                                var quantidade = _saldoDePeso.GetValorDBDatasource<double>(dbdts);
+                                var filial = GetFilial(_deposito.GetValorDBDatasource<string>(dbdts));
+                                var precoUnitario = _valorFaturado.GetValorDBDatasource<double>(dbdts);
+
+                                var formBase = tipoObjeto.Form.Abrir();
+                                tipoObjeto.Form.PreencherDocumento(formBase, new DocMKTParams()
                                 {
                                     NumContratoFinal = numContratoFinal,
                                     Fornecedor = fornecedor,
@@ -434,15 +406,11 @@ namespace CafebrasContratos
                                     PrecoUnitario = precoUnitario,
                                     Filial = filial,
                                     QuantidadeSacas = qtdSacas
-                                }); 
-                            }
-                            else if(formIsAssociated)
-                            {
-                                FormSelecaoDocMKT.AbrirForm(FormUID);
+                                });
                             }
                             else
                             {
-                                Dialogs.PopupInfo("Tipo de Documento não suportado no momento.");
+                                FormSelecaoDocMKT.AbrirForm(FormUID, tipoObjeto.ObjetoBase);
                             }
                         }
                     }
@@ -475,8 +443,9 @@ namespace CafebrasContratos
             {
                 var mtx = GetMatrix(FormUID, _matrizDocumentos.ItemUID);
                 var codigo = mtx.Columns.Item(pVal.ColUID).Cells.Item(pVal.Row).Specific.Value;
-
-                new FormPedidoCompra().Abrir(codigo);
+                string objtype = mtx.Columns.Item(_matrizDocumentos.TipoDocumento.ItemUID).Cells.Item(pVal.Row).Specific.Value;
+                var form = new HandlerTipoDeObjeto().GetByObjectType(Int32.Parse(objtype)).Form;
+                form.Abrir(codigo);
             }
         }
 

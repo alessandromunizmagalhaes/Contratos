@@ -2,6 +2,7 @@
 using SAPbouiCOM;
 using SAPHelper;
 using System;
+using System.Xml;
 
 namespace CafebrasContratos
 {
@@ -68,10 +69,12 @@ namespace CafebrasContratos
                     int row = mtx.GetNextSelectedRow();
                     if (row > 0)
                     {
+                        var objBase = GetObjetoDeContrato(form);
                         var codigoDocSelecionado = mtx.GetCellSpecific(_matrizDocumentos.Codigo.ItemUID, row).Value;
-                        FormPedidoCompra formTipoBase = new FormPedidoCompra();
-                        var formBase = formTipoBase.Abrir(codigoDocSelecionado);
-                        formTipoBase.CopiarPara(formBase);
+                        var formBase = objBase.Form.Abrir(codigoDocSelecionado);
+                        Dialogs.Info("Buscando informações...");
+                        objBase.Form.CopiarPara(formBase);
+                        form.Close();
                     }
                     else
                     {
@@ -81,9 +84,21 @@ namespace CafebrasContratos
             }
         }
 
-        public static void AbrirForm(string fatherFormUID)
+        public static void AbrirForm(string fatherFormUID, TipoDeObjetoDeContrato tipoDeObjetoDeContrato)
         {
-            CriarFormFilho(AppDomain.CurrentDomain.BaseDirectory + SRF, fatherFormUID, new FormSelecaoDocMKT());
+            _fatherFormUID = fatherFormUID;
+            FormCreationParams creationPackage = Global.SBOApplication.CreateObject(BoCreatableObjectType.cot_FormCreationParams);
+
+            var oXMLDoc = new XmlDocument();
+            oXMLDoc.Load(AppDomain.CurrentDomain.BaseDirectory + SRF);
+            creationPackage.XmlData = oXMLDoc.InnerXml;
+            creationPackage.UniqueID = Guid.NewGuid().ToString("N");
+            SAPbouiCOM.Form oForm = Global.SBOApplication.Forms.AddEx(creationPackage);
+
+            var userDataSource = oForm.DataSources.UserDataSources.Add("ObjectType", BoDataType.dt_SHORT_NUMBER);
+            userDataSource.Value = tipoDeObjetoDeContrato.Tipo.ToString();
+
+            oForm.Visible = true;
         }
         
         public void AtualizarMatriz(SAPbouiCOM.Form form)
@@ -97,9 +112,7 @@ namespace CafebrasContratos
                 form.Freeze(true);
 
                 var sql = string.Empty;
-                int i = 0;
-                var listaDeTabelas = new TabelaObjectTypes().data;
-                var tabela = "OPOR";
+                var tabela = GetObjetoDeContrato(form).Tabela;
                 
                 sql += $@"SELECT 
 	                ObjType as Tipo
@@ -131,6 +144,12 @@ namespace CafebrasContratos
             {
                 form.Freeze(false);
             }
+        }
+
+        public TipoDeObjetoDeContrato GetObjetoDeContrato(SAPbouiCOM.Form form)
+        {
+            var objecttype = form.DataSources.UserDataSources.Item("ObjectType").Value;
+            return new HandlerTipoDeObjeto().GetByObjectType(Int32.Parse(objecttype));
         }
         
         public class MatrizDTDocumentos : MatrizDatatable
