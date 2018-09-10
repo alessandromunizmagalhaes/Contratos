@@ -19,6 +19,13 @@
             <Menu Checked="0"
 							  Enabled="1"
 							  FatherUID="mnuCadastro"
+							  String="Utilizações bloqueadas"
+							  Type="1"
+							  UniqueID="FormUtilizacaoBloqueada">
+            </Menu>
+            <Menu Checked="0"
+							  Enabled="1"
+							  FatherUID="mnuCadastro"
 							  String="Cadastro de Modalidades"
 							  Type="1"
 							  UniqueID="FormModalidade">

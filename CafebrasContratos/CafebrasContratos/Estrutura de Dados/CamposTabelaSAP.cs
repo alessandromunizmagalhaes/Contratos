@@ -17,5 +17,7 @@ namespace CafebrasContratos
         public Coluna filhoDeContrato = new ColunaVarchar("SonOfContract", "Son of Contract", 1, false, "N");
         public Coluna Embalagem = new ColunaVarchar("Packg", "Embalagem", 50);
         public Coluna QuantidadeSacas = new ColunaQuantity("QtdSaca", "Quantidade de Sacas");
+        
+        public Coluna ItemFiscal = new ColunaVarchar("ItemFiscal", "Código do Item Fiscal", 50);
     }
 }

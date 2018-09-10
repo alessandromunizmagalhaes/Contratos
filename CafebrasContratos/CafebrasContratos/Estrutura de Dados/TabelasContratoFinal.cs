@@ -101,6 +101,20 @@ namespace CafebrasContratos
         }
     }
 
+    public class TabelaPrevisaoPagamentoDoContratoFinal : Tabela
+    {
+        public Coluna Quantidade { get { return new ColunaQuantity("Quantity", "Quantidade"); } }
+        public Coluna PrecoLivre { get { return new ColunaPrice("Preco", "Preço Livre"); } }
+        public Coluna Total { get { return new ColunaPrice("Total", "Total"); } }
+        public Coluna Data { get { return new ColunaDate("Data", "Data"); } }
+        public Coluna Observacoes { get { return new ColunaText("Obs", "Observações"); } }
+
+        public TabelaPrevisaoPagamentoDoContratoFinal() : base("UPD_CFC8", "Previsao PGTO Contrato F", BoUTBTableType.bott_MasterDataLines)
+        {
+
+        }
+    }
+
 
     #endregion
 
@@ -278,6 +292,7 @@ namespace CafebrasContratos
                     , new TabelaAnexosDoContratoFinal()
                     , new TabelaDadosRetiradaDoContratoFinal()
                     , new TabelaPrevisaoEntregaDoContratoFinal()
+                    , new TabelaPrevisaoPagamentoDoContratoFinal()
                 }
             )
         {

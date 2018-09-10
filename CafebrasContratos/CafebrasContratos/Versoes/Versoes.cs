@@ -18,6 +18,7 @@ namespace CafebrasContratos
                 new TabelaCertificado(),
                 new TabelaParticipante(),
                 new TabelaGrupoCafe(),
+                new TabelaUtilizacaoBloqueada(),
                 new TabelaConfiguracaoPeneira(),
                 new TabelaObjectTypes(),
                 new TabelaPreContrato(),
@@ -43,6 +44,8 @@ namespace CafebrasContratos
             db.CriarCampo(tabelaOPOR, camposSAP.filhoDeContrato);
             db.CriarCampo(tabelaOPOR, camposSAP.Embalagem);
             db.CriarCampo("POR1", camposSAP.QuantidadeSacas);
+            
+            db.CriarCampo("OITM", camposSAP.ItemFiscal);
 
             Dialogs.Info($"Atualizando procedimentos armazenados...");
 

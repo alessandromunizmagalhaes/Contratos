@@ -53,6 +53,9 @@ namespace CafebrasContratos
         {
             base._OnAdicionarNovo(form);
 
+            var mtx = GetMatrix(form, _matrizRetirada.ItemUID);
+            mtx.AddRow();
+
             form.Items.Item(_descricao.ItemUID).Click();
         }
 
@@ -162,6 +165,15 @@ namespace CafebrasContratos
         #endregion
 
 
+        #region :: Matrizes
+
+        public MatrizRetirada _matrizRetirada = new MatrizRetirada() { ItemUID = "mtxRetira", Datasource = new TabelaDadosRetiradaDoContratoFinal().NomeComArroba };
+        public MatrizPrevisaoEntrega _matrizPrevisaoEntrega = new MatrizPrevisaoEntrega() { ItemUID = "mtxEntrega", Datasource = new TabelaPrevisaoEntregaDoContratoFinal().NomeComArroba };
+        public MatrizPrevisaoPagamento _matrizPrevisaoPagamento = new MatrizPrevisaoPagamento() { ItemUID = "mtxPgto", Datasource = new TabelaPrevisaoPagamentoDoContratoFinal().NomeComArroba };
+
+        #endregion
+
+
         #region :: Definição de Botões
 
         private ComboForm _botaoComboCopiar = new ComboForm()
@@ -249,6 +261,16 @@ namespace CafebrasContratos
 
                 var mtx = GetMatrix(form, _matrizDocumentos.ItemUID);
                 _matrizDocumentos.Bind(mtx);
+
+                var mtxRetirada = GetMatrix(form, _matrizRetirada.ItemUID);
+                _matrizRetirada._tipoEmbalagem.Popular(mtxRetirada.Columns.Item(_matrizRetirada._tipoEmbalagem.ItemUID));
+                mtxRetirada.AutoResizeColumns();
+
+                var mtxPrevEntrega = GetMatrix(form, _matrizPrevisaoEntrega.ItemUID);
+                mtxPrevEntrega.AutoResizeColumns();
+
+                var mtxPrevisaoPagamento = GetMatrix(form, _matrizPrevisaoPagamento.ItemUID);
+                mtxPrevisaoPagamento.AutoResizeColumns();
 
                 if (form.Mode == BoFormMode.fm_ADD_MODE)
                 {
@@ -340,6 +362,78 @@ namespace CafebrasContratos
                     }
                 }
             }
+            else if (pVal.ItemUID == _matrizRetirada._adicionar.ItemUID)
+            {
+                using (var formCOM = new FormCOM(FormUID))
+                {
+                    var form = formCOM.Form;
+                    using (var dbdtsCOM = new DBDatasourceCOM(form, _matrizRetirada.Datasource))
+                    {
+                        var dbdts = dbdtsCOM.Dbdts;
+                        _matrizRetirada.AdicionarLinha(form, dbdts);
+                    }
+                }
+            }
+            else if (pVal.ItemUID == _matrizRetirada._remover.ItemUID)
+            {
+                using (var formCOM = new FormCOM(FormUID))
+                {
+                    var form = formCOM.Form;
+                    using (var dbdtsCOM = new DBDatasourceCOM(form, _matrizRetirada.Datasource))
+                    {
+                        var dbdts = dbdtsCOM.Dbdts;
+                        _matrizRetirada.RemoverLinhaSelecionada(form, dbdts);
+                    }
+                }
+            }
+            else if (pVal.ItemUID == _matrizPrevisaoEntrega._adicionar.ItemUID)
+            {
+                using (var formCOM = new FormCOM(FormUID))
+                {
+                    var form = formCOM.Form;
+                    using (var dbdtsCOM = new DBDatasourceCOM(form, _matrizPrevisaoEntrega.Datasource))
+                    {
+                        var dbdts = dbdtsCOM.Dbdts;
+                        _matrizPrevisaoEntrega.AdicionarLinha(form, dbdts);
+                    }
+                }
+            }
+            else if (pVal.ItemUID == _matrizPrevisaoEntrega._remover.ItemUID)
+            {
+                using (var formCOM = new FormCOM(FormUID))
+                {
+                    var form = formCOM.Form;
+                    using (var dbdtsCOM = new DBDatasourceCOM(form, _matrizPrevisaoEntrega.Datasource))
+                    {
+                        var dbdts = dbdtsCOM.Dbdts;
+                        _matrizPrevisaoEntrega.RemoverLinhaSelecionada(form, dbdts);
+                    }
+                }
+            }
+            else if (pVal.ItemUID == _matrizPrevisaoPagamento._adicionar.ItemUID)
+            {
+                using (var formCOM = new FormCOM(FormUID))
+                {
+                    var form = formCOM.Form;
+                    using (var dbdtsCOM = new DBDatasourceCOM(form, _matrizPrevisaoPagamento.Datasource))
+                    {
+                        var dbdts = dbdtsCOM.Dbdts;
+                        _matrizPrevisaoPagamento.AdicionarLinha(form, dbdts);
+                    }
+                }
+            }
+            else if (pVal.ItemUID == _matrizPrevisaoPagamento._remover.ItemUID)
+            {
+                using (var formCOM = new FormCOM(FormUID))
+                {
+                    var form = formCOM.Form;
+                    using (var dbdtsCOM = new DBDatasourceCOM(form, _matrizPrevisaoPagamento.Datasource))
+                    {
+                        var dbdts = dbdtsCOM.Dbdts;
+                        _matrizPrevisaoPagamento.RemoverLinhaSelecionada(form, dbdts);
+                    }
+                }
+            }
             else
             {
                 base.OnAfterItemPressed(FormUID, ref pVal, out BubbleEvent);
@@ -426,15 +520,6 @@ namespace CafebrasContratos
             }
         }
 
-        private string GetFilial(string deposito)
-        {
-            using (var rsCOM = new RecordSet())
-            {
-                var rs = rsCOM.DoQuery($"SELECT BPLID FROM OWHS WHERE WhsCode = '{deposito}'");
-                return rs.Fields.Item("BPLID").Value.ToString();
-            }
-        }
-
         public override void OnBeforeMatrixLinkPressed(string FormUID, ref ItemEvent pVal, out bool BubbleEvent)
         {
             base.OnBeforeMatrixLinkPressed(FormUID, ref pVal, out BubbleEvent);
@@ -447,6 +532,122 @@ namespace CafebrasContratos
                 var form = new HandlerTipoDeObjeto().GetByObjectType(Int32.Parse(objtype)).Form;
                 form.Abrir(codigo);
             }
+        }
+
+        public override void OnAfterLostFocus(string FormUID, ref ItemEvent pVal, out bool BubbleEvent)
+        {
+            base.OnAfterLostFocus(FormUID, ref pVal, out BubbleEvent);
+
+            if(EventoEmAlgumaColunaMatrizRetirada(pVal))
+            {
+                using (var formCOM = new FormCOM(FormUID))
+                {
+                    var form = formCOM.Form;
+                    var mtx = GetMatrix(form, _matrizRetirada.ItemUID);
+                    mtx.FlushToDataSource();
+                    using (var dbdtsCOM = new DBDatasourceCOM(form, _matrizRetirada.Datasource))
+                    {
+                        var dbdts = dbdtsCOM.Dbdts;
+                        var row = pVal.Row - 1;
+                        var pesoRetirada = _matrizRetirada._pesoRetirada.GetValorDBDatasource<double>(dbdts, row);
+                        var quantidadeEmbalagem = _matrizRetirada._quantidadeEmbalagem.GetValorDBDatasource<double>(dbdts, row);
+                        var pesoEmbalagem = _matrizRetirada._pesoEmbalagem.GetValorDBDatasource<double>(dbdts, row);
+
+                        var pesoLiquido = (pesoRetirada - (quantidadeEmbalagem * pesoEmbalagem));
+                        _matrizRetirada._pesoLiquido.SetValorDBDatasource(dbdts, pesoLiquido, row);
+                        mtx.LoadFromDataSourceEx();
+                    }
+                }
+            }
+            else if (EventoEmAlgumaColunaMatrizPrevisaoEntregaUm(pVal))
+            {
+                using (var formCOM = new FormCOM(FormUID))
+                {
+                    var form = formCOM.Form;
+                    var mtx = GetMatrix(form, _matrizPrevisaoEntrega.ItemUID);
+                    mtx.FlushToDataSource();
+                    using (var dbdtsCOM = new DBDatasourceCOM(form, _matrizPrevisaoEntrega.Datasource))
+                    {
+                        var dbdts = dbdtsCOM.Dbdts;
+                        var row = pVal.Row - 1;
+
+                        var valorTotal = _matrizPrevisaoEntrega._valorTotal.GetValorDBDatasource<double>(dbdts, row);
+                        var peso = _matrizPrevisaoEntrega._peso.GetValorDBDatasource<double>(dbdts, row);
+
+                        var valorUnitario = peso == 0 ? 0 : (valorTotal / peso);
+                        _matrizPrevisaoEntrega._valorUnitario.SetValorDBDatasource(dbdts, valorUnitario, row);
+                        mtx.LoadFromDataSourceEx();
+                    }
+                }
+            }
+            else if (EventoEmAlgumaColunaMatrizPrevisaoEntregaDois(pVal))
+            {
+                using (var formCOM = new FormCOM(FormUID))
+                {
+                    var form = formCOM.Form;
+                    var mtx = GetMatrix(form, _matrizPrevisaoEntrega.ItemUID);
+                    mtx.FlushToDataSource();
+                    using (var dbdtsCOM = new DBDatasourceCOM(form, _matrizPrevisaoEntrega.Datasource))
+                    {
+                        var dbdts = dbdtsCOM.Dbdts;
+                        var row = pVal.Row - 1;
+
+                        var valorUnitario = _matrizPrevisaoEntrega._valorUnitario.GetValorDBDatasource<double>(dbdts, row);
+
+                        var sacas60 = valorUnitario == 0 ? 0 : (valorUnitario / 60);
+                        _matrizPrevisaoEntrega._sacas60.SetValorDBDatasource(dbdts, sacas60, row);
+                        mtx.LoadFromDataSourceEx();
+                    }
+                }
+            }
+            else if (EventoEmAlgumaColunaMatrizPrevisaoPagamento(pVal))
+            {
+                using (var formCOM = new FormCOM(FormUID))
+                {
+                    var form = formCOM.Form;
+                    var mtx = GetMatrix(form, _matrizPrevisaoPagamento.ItemUID);
+                    mtx.FlushToDataSource();
+                    using (var dbdtsCOM = new DBDatasourceCOM(form, _matrizPrevisaoPagamento.Datasource))
+                    {
+                        var dbdts = dbdtsCOM.Dbdts;
+                        var row = pVal.Row - 1;
+
+                        var precoLivre = _matrizPrevisaoPagamento._precoLivre.GetValorDBDatasource<double>(dbdts, row);
+                        var quantidade = _matrizPrevisaoPagamento._quantidade.GetValorDBDatasource<double>(dbdts, row);
+
+                        var total = ((quantidade * precoLivre));
+                        _matrizPrevisaoPagamento._total.SetValorDBDatasource(dbdts, total, row);
+                        mtx.LoadFromDataSourceEx();
+                    }
+                }
+            }
+        }
+
+        private bool EventoEmAlgumaColunaMatrizRetirada(ItemEvent pVal)
+        {
+            return _matrizRetirada._pesoRetirada.ItemUID == pVal.ColUID
+                || _matrizRetirada._quantidadeEmbalagem.ItemUID == pVal.ColUID
+                || _matrizRetirada._pesoEmbalagem.ItemUID == pVal.ColUID
+            ;
+        }
+
+        private bool EventoEmAlgumaColunaMatrizPrevisaoEntregaUm(ItemEvent pVal)
+        {
+            return _matrizPrevisaoEntrega._valorUnitario.ItemUID == pVal.ColUID
+                || _matrizPrevisaoEntrega._valorTotal.ItemUID == pVal.ColUID
+            ;
+        }
+
+        private bool EventoEmAlgumaColunaMatrizPrevisaoEntregaDois(ItemEvent pVal)
+        {
+            return _matrizPrevisaoEntrega._valorUnitario.ItemUID == pVal.ColUID;
+        }
+
+        private bool EventoEmAlgumaColunaMatrizPrevisaoPagamento(ItemEvent pVal)
+        {
+            return _matrizPrevisaoPagamento._precoLivre.ItemUID == pVal.ColUID
+                || _matrizPrevisaoPagamento._quantidade.ItemUID == pVal.ColUID
+            ;
         }
 
         #endregion
@@ -612,6 +813,19 @@ namespace CafebrasContratos
         #endregion
 
 
+        #region :: Utils
+
+        private string GetFilial(string deposito)
+        {
+            using (var rsCOM = new RecordSet())
+            {
+                var rs = rsCOM.DoQuery($"SELECT BPLID FROM OWHS WHERE WhsCode = '{deposito}'");
+                return rs.Fields.Item("BPLID").Value.ToString();
+            }
+        }
+
+        #endregion
+
         public class MatrizDTDocumentos : MatrizDatatable
         {
             public ItemForm TipoDocumento = new ItemForm()
@@ -649,6 +863,207 @@ namespace CafebrasContratos
                 ItemUID = "doctotal",
                 Datasource = "DocTotal"
             };
+        }
+        
+        public class MatrizRetirada : MatrizChildForm, IItemFormContrato
+        {
+            public ItemForm _dataRetirada = new ItemForm()
+            {
+                ItemUID = "U_Data",
+                Datasource = "U_Data"
+            };
+            public ItemForm _numeroNF = new ItemForm()
+            {
+                ItemUID = "U_NumNF",
+                Datasource = "U_NumNF"
+            };
+            public ItemForm _sacasNF = new ItemForm()
+            {
+                ItemUID = "U_SacasNF",
+                Datasource = "U_SacasNF"
+            };
+            public ItemForm _valorNF = new ItemForm()
+            {
+                ItemUID = "U_ValorNF",
+                Datasource = "U_ValorNF"
+            };
+            public ItemForm _pesoRetirada = new ItemForm()
+            {
+                ItemUID = "U_Peso",
+                Datasource = "U_Peso"
+            };
+            public ComboForm _tipoEmbalagem = new ComboForm()
+            {
+                ItemUID = "U_TipoEmb",
+                Datasource = "U_TipoEmb",
+                SQL = "SELECT PkgCode, PkgType FROM OPKG ORDER BY PkgType",
+            };
+            public ItemForm _quantidadeEmbalagem = new ItemForm()
+            {
+                ItemUID = "U_QtdEmb",
+                Datasource = "U_QtdEmb"
+            };
+            public ItemForm _pesoEmbalagem = new ItemForm()
+            {
+                ItemUID = "U_PesoEmb",
+                Datasource = "U_PesoEmb"
+            };
+            public ItemForm _pesoLiquido = new ItemForm()
+            {
+                ItemUID = "U_PesoLiq",
+                Datasource = "U_PesoLiq"
+            };
+            public ItemForm _quebra = new ItemForm()
+            {
+                ItemUID = "U_Quebra",
+                Datasource = "U_Quebra"
+            };
+            public ItemForm _tipoDocumento = new ItemForm()
+            {
+                ItemUID = "U_TipoDoc",
+                Datasource = "U_TipoDoc"
+            };
+            public ItemForm _numeroDocumento = new ItemForm()
+            {
+                ItemUID = "U_NumDoc",
+                Datasource = "U_NumDoc"
+            };
+
+            public ButtonForm _adicionar = new ButtonForm()
+            {
+                ItemUID = "btnAddRet"
+            };
+            public ButtonForm _remover = new ButtonForm()
+            {
+                ItemUID = "btnRmvRet"
+            };
+
+            public GestaoCamposContrato gestaoCamposEmStatus {
+                get {
+                    return new GestaoCamposContrato()
+                    {
+                        QuandoEmEsboco = true,
+                        QuandoEmLiberado = true,
+                        QuandoEmRenegociacao = true,
+                        QuandoEmAutorizado = false,
+                        QuandoEmEncerrado = false,
+                        QuandoEmCancelado = false,
+                    };
+                } set { }
+            }
+
+        }
+
+        public class MatrizPrevisaoEntrega : MatrizChildForm, IItemFormContrato
+        {
+            public ItemForm _data = new ItemForm()
+            {
+                ItemUID = "U_Data",
+                Datasource = "U_Data"
+            };
+            public ItemForm _peso = new ItemForm()
+            {
+                ItemUID = "U_Peso",
+                Datasource = "U_Peso"
+            };
+            public ItemForm _valorUnitario = new ItemForm()
+            {
+                ItemUID = "U_ValorUni",
+                Datasource = "U_ValorUni"
+            };
+            public ItemForm _valorTotal = new ItemForm()
+            {
+                ItemUID = "U_ValorTot",
+                Datasource = "U_ValorTot"
+            };
+            public ItemForm _sacas60 = new ItemForm()
+            {
+                ItemUID = "U_Sacas60",
+                Datasource = "U_Sacas60"
+            };
+
+            public ButtonForm _adicionar = new ButtonForm()
+            {
+                ItemUID = "btnAddEnt"
+            };
+            public ButtonForm _remover = new ButtonForm()
+            {
+                ItemUID = "btnRmvEnt"
+            };
+
+            public GestaoCamposContrato gestaoCamposEmStatus
+            {
+                get
+                {
+                    return new GestaoCamposContrato()
+                    {
+                        QuandoEmEsboco = true,
+                        QuandoEmLiberado = true,
+                        QuandoEmRenegociacao = true,
+                        QuandoEmAutorizado = false,
+                        QuandoEmEncerrado = false,
+                        QuandoEmCancelado = false,
+                    };
+                }
+                set { }
+            }
+
+        }
+
+        public class MatrizPrevisaoPagamento : MatrizChildForm, IItemFormContrato
+        {
+            public ItemForm _quantidade = new ItemForm()
+            {
+                ItemUID = "U_Quantity",
+                Datasource = "U_Quantity"
+            };
+            public ItemForm _precoLivre = new ItemForm()
+            {
+                ItemUID = "U_Preco",
+                Datasource = "U_Preco"
+            };
+            public ItemForm _total = new ItemForm()
+            {
+                ItemUID = "U_Total",
+                Datasource = "U_Total"
+            };
+            public ItemForm _data = new ItemForm()
+            {
+                ItemUID = "U_Data",
+                Datasource = "U_Data"
+            };
+            public ItemForm _obs = new ItemForm()
+            {
+                ItemUID = "U_Obs",
+                Datasource = "U_Obs"
+            };
+
+            public ButtonForm _adicionar = new ButtonForm()
+            {
+                ItemUID = "btnAddPgto"
+            };
+            public ButtonForm _remover = new ButtonForm()
+            {
+                ItemUID = "btnRmvPgto"
+            };
+
+            public GestaoCamposContrato gestaoCamposEmStatus
+            {
+                get
+                {
+                    return new GestaoCamposContrato()
+                    {
+                        QuandoEmEsboco = true,
+                        QuandoEmLiberado = true,
+                        QuandoEmRenegociacao = true,
+                        QuandoEmAutorizado = false,
+                        QuandoEmEncerrado = false,
+                        QuandoEmCancelado = false,
+                    };
+                }
+                set { }
+            }
+
         }
 
         public class AbasContratoFinal : AbasContrato

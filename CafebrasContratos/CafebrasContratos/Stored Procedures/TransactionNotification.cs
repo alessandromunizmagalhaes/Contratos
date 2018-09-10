@@ -184,8 +184,7 @@ namespace CafebrasContratos
 		                SET @ParmDefinition = N'@DocEntry NVARCHAR(255), @ResOUT BIT OUTPUT';  
 		                SET @SELECT = 'SELECT @ResOUT = COUNT(*) 
 		                FROM ' + RIGHT(@Tabela,3) + '1' + ' tb0 
-		                INNER JOIN OITM tb1 ON (tb1.ItemCode = tb0.ItemCode) 
-		                INNER JOIN [@UPD_OCTC] tb2 ON (tb2.U_ItmsGrpCod = tb1.ItmsGrpCod) 
+		                INNER JOIN [@UPD_DENIED_USAGE] tb2 ON (tb2.U_Usage = tb0.Usage)
 		                WHERE tb0.DocEntry = @DocEntry';
 		                EXECUTE sp_executesql @SELECT, @ParmDefinition, @DocEntry = @list_of_cols_val_tab_del, @ResOUT = @TemItemDeCafe OUTPUT;
 	                    IF @TemItemDeCafe > 0 AND (@VeioDeContrato = 'N' OR @VeioDeContrato IS NULL)

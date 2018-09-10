@@ -48,6 +48,7 @@
     <Compile Include="Enums\EnumsContratoFinal.cs" />
     <Compile Include="Enums\EnumsPreContrato.cs" />
     <Compile Include="Enums\Peneira.cs" />
+    <Compile Include="Estrutura de Dados\TabelaUtilizacaoBloqueada.cs" />
     <Compile Include="Estrutura de Dados\TabelaObjectTypes.cs" />
     <Compile Include="Estrutura de Dados\TabelaConfiguracaoPeneira.cs" />
     <Compile Include="Estrutura de Dados\TabelasCadastroBasico.cs" />
@@ -56,6 +57,7 @@
     <Compile Include="Estrutura de Dados\CamposTabelaSAP.cs" />
     <Compile Include="Estrutura de Dados\TabelaGrupoCafe.cs" />
     <Compile Include="Estrutura de Dados\TabelaParticipante.cs" />
+    <Compile Include="Forms\Cadastros\FormUtilizacaoBloqueada.cs" />
     <Compile Include="Forms\Cadastros\FormGrupoDeItens.cs" />
     <Compile Include="Forms\Cadastros\FormParticipante.cs" />
     <Compile Include="Forms\Cadastros\FormCertificado.cs" />

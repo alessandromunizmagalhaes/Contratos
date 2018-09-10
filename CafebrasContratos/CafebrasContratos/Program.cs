@@ -117,6 +117,7 @@ namespace CafebrasContratos
                 #region :: Forms Cadastro Básico
 
                 var formGrupoDeItens = new FormGrupoDeItens();
+                var formUtilizacaoBloqueada = new FormUtilizacaoBloqueada();
                 var formConfiguracaoPeneira = new FormConfiguracaoPeneira();
                 var formCertificado = new FormCertificado();
                 var formMetodoFinanceiro = new FormMetodoFinanceiro();
@@ -128,6 +129,7 @@ namespace CafebrasContratos
 
                 var formsCadastroBasico = new List<SAPHelper.Form>() {
                      formGrupoDeItens,
+                     formUtilizacaoBloqueada,
                      formConfiguracaoPeneira,
                      formCertificado,
                      formMetodoFinanceiro,
@@ -266,6 +268,7 @@ namespace CafebrasContratos
                         formContratoFinalDetalheCertificado,
                         formContratoFinalComissoes,
                         formGrupoDeItens,
+                        formUtilizacaoBloqueada,
                         formConfiguracaoPeneira,
                         formPedidoCompra,
                         formSelecaoDocMKT
@@ -276,6 +279,9 @@ namespace CafebrasContratos
                     }),
                     new MapEventsToForms(BoEventTypes.et_DOUBLE_CLICK, new List<SAPHelper.Form>(){
                         formPreContrato,
+                        formContratoFinal
+                    }),
+                    new MapEventsToForms(BoEventTypes.et_LOST_FOCUS, new List<SAPHelper.Form>(){
                         formContratoFinal
                     }),
                 });
