@@ -478,6 +478,15 @@ namespace CafebrasContratos
                                 var qtdSacas = _quantidadeDeSacas.GetValorDBDatasource<double>(dbdts);
 
                                 var codigoItem = _codigoItem.GetValorDBDatasource<string>(dbdts);
+                                var nomeItem = _nomeItem.GetValorDBDatasource<string>(dbdts);
+
+                                var novoCodigoItem = tipoObjeto.IndexParaCombo == new TipoNotaFiscalEntrada().IndexParaCombo ? GetItemFiscal(codigoItem) : codigoItem;
+                                if (string.IsNullOrEmpty(novoCodigoItem))
+                                {
+                                    Dialogs.PopupError($"Nenhum item fiscal foi configurado para o item '{nomeItem}' do contrato");
+                                    novoCodigoItem = codigoItem;
+                                }
+
                                 var deposito = _deposito.GetValorDBDatasource<string>(dbdts);
                                 var utilizacao = _utilizacao.GetValorDBDatasource<string>(dbdts);
                                 var safra = _safra.GetValorDBDatasource<string>(dbdts);
@@ -491,7 +500,7 @@ namespace CafebrasContratos
                                 {
                                     NumContratoFinal = numContratoFinal,
                                     Fornecedor = fornecedor,
-                                    Item = codigoItem,
+                                    Item = novoCodigoItem,
                                     Utilizacao = utilizacao,
                                     Transportadora = transportadora,
                                     Embalagem = embalagem,
@@ -517,6 +526,15 @@ namespace CafebrasContratos
             else
             {
                 base.OnAfterComboSelect(FormUID, ref pVal, out BubbleEvent);
+            }
+        }
+
+        private string GetItemFiscal(string codigoItem)
+        {
+            using (var rsCOM = new RecordSet())
+            {
+                var rs = rsCOM.DoQuery($"SELECT U_ItemFiscal FROM OITM WHERE ItemCode = '{codigoItem}'");
+                return rs.Fields.Item("U_ItemFiscal").Value;
             }
         }
 
