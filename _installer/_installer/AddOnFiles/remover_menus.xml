@@ -1,0 +1,8 @@
+﻿<Application>
+  <Menus>
+    <action type="remove">
+      <Menu UniqueID="mnuCadastro"></Menu>
+      <Menu UniqueID="mnuContrato"></Menu>
+    </action>
+  </Menus>
+</Application>

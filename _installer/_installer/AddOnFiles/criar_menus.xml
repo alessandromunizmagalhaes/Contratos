@@ -1,0 +1,106 @@
+﻿<Application>
+	<Menus>
+		<action type="add">
+			<Menu Checked="0"
+				  Enabled="1"
+				  FatherUID="43525"
+				  String="Contratos"
+				  Type="2"
+				  UniqueID="mnuCadastro">
+				<Menus>
+					<action type="add">
+            <Menu Checked="0"
+							  Enabled="1"
+							  FatherUID="mnuCadastro"
+							  String="Cadastro de Grupos de Café"
+							  Type="1"
+							  UniqueID="FormGrupoDeItens">
+            </Menu>
+            <Menu Checked="0"
+							  Enabled="1"
+							  FatherUID="mnuCadastro"
+							  String="Utilizações bloqueadas"
+							  Type="1"
+							  UniqueID="FormUtilizacaoBloqueada">
+            </Menu>
+            <Menu Checked="0"
+							  Enabled="1"
+							  FatherUID="mnuCadastro"
+							  String="Cadastro de Modalidades"
+							  Type="1"
+							  UniqueID="FormModalidade">
+            </Menu>
+            <Menu Checked="0"
+							  Enabled="1"
+							  FatherUID="mnuCadastro"
+							  String="Cadastro de Unidade Comercial"
+							  Type="1"
+							  UniqueID="FormUnidadeComercial">
+            </Menu>
+            <Menu Checked="0"
+							  Enabled="1"
+							  FatherUID="mnuCadastro"
+							  String="Cadastro de Tipo de Operação"
+							  Type="1"
+							  UniqueID="FormTipoOperacao">
+            </Menu>
+            <Menu Checked="0"
+							  Enabled="1"
+							  FatherUID="mnuCadastro"
+							  String="Cadastro de Método Financeiro"
+							  Type="1"
+							  UniqueID="FormMetodoFinanceiro">
+            </Menu>
+            <Menu Checked="0"
+							  Enabled="1"
+							  FatherUID="mnuCadastro"
+							  String="Cadastro de Safra"
+							  Type="1"
+							  UniqueID="FormSafra">
+            </Menu>
+            <Menu Checked="0"
+							  Enabled="1"
+							  FatherUID="mnuCadastro"
+							  String="Cadastro de Certificado"
+							  Type="1"
+							  UniqueID="FormCertificado">
+            </Menu>
+            <Menu Checked="0"
+							  Enabled="1"
+							  FatherUID="mnuCadastro"
+							  String="Cadastro de Participantes"
+							  Type="1"
+							  UniqueID="FormParticipante">
+            </Menu>
+            <Menu Checked="0"
+							  Enabled="1"
+							  FatherUID="mnuCadastro"
+							  String="Configuração de Peneiras"
+							  Type="1"
+							  UniqueID="FormConfiguracaoPeneira">
+            </Menu>
+					</action>
+				</Menus>
+			</Menu>
+      <Menu Checked="0"
+				  Enabled="1"
+				  FatherUID="43520"
+				  String="Contratos"
+				  Type="2"
+          Image="_LOGO_PATH_" 
+				  UniqueID="mnuContrato">
+				<Menus>
+					<action type="add">
+            <Menu Checked="0"
+							  Enabled="1"
+							  FatherUID="mnuContrato"
+							  String="Contrato de Compra de Café"
+							  Type="1"
+							  UniqueID="FormPreContrato">
+            </Menu>
+					</action>
+				</Menus>
+			</Menu>
+		</action>
+	</Menus>
+</Application>

@@ -11,7 +11,7 @@ namespace CafebrasContratos
     {
         private static string _addonName = "Cafébras Contratos";
         public static string _grupoAprovador;
-        public static double _versaoAddon = 0.1;
+        public static double _versaoAddon = 0.2;
 
         public static readonly List<Peneira> _peneiras = new List<Peneira>() { };
         public static readonly List<string> _gruposDeItensPermitidos = new List<string>() { };
@@ -271,6 +271,11 @@ namespace CafebrasContratos
                         formUtilizacaoBloqueada,
                         formConfiguracaoPeneira,
                         formPedidoCompra,
+                        formNotaFiscalEntrada,
+                        formAdiantamentoFornecedores,
+                        formRecebimentoMercadoria,
+                        formDevolucaoMercadoria,
+                        formDevNotaFiscalEntrada,
                         formSelecaoDocMKT
                     }),
                     new MapEventsToForms(BoEventTypes.et_MATRIX_LINK_PRESSED, new List<SAPHelper.Form>(){

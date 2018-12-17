@@ -487,13 +487,16 @@ namespace CafebrasContratos
                                     novoCodigoItem = codigoItem;
                                 }
 
+                                var totalFaturado = _totalFaturado.GetValorDBDatasource<double>(dbdts);
+                                var qtdPeso = _quantidadeDePeso.GetValorDBDatasource<double>(dbdts);
+
                                 var deposito = _deposito.GetValorDBDatasource<string>(dbdts);
                                 var utilizacao = _utilizacao.GetValorDBDatasource<string>(dbdts);
                                 var safra = _safra.GetValorDBDatasource<string>(dbdts);
                                 var embalagem = _embalagem.GetValorDBDatasource<string>(dbdts);
                                 var quantidade = _saldoDePeso.GetValorDBDatasource<double>(dbdts);
                                 var filial = GetFilial(_deposito.GetValorDBDatasource<string>(dbdts));
-                                var precoUnitario = _valorFaturado.GetValorDBDatasource<double>(dbdts);
+                                var precoUnitario =  totalFaturado / qtdPeso;
 
                                 var formBase = tipoObjeto.Form.Abrir();
                                 tipoObjeto.Form.PreencherDocumento(formBase, new DocMKTParams()
