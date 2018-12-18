@@ -151,16 +151,16 @@ namespace CafebrasContratos
 
         private void ValidarMatriz(DBDataSource dbdts, Matriz matriz)
         {
-            for (int i = 0; i < dbdts.Size; i++)
-            {
-                var participante = matriz._participante.GetValorDBDatasource<string>(dbdts, i);
-                var comissao = matriz._comissao.GetValorDBDatasource<double>(dbdts, i);
+            //for (int i = 0; i < dbdts.Size; i++)
+            //{
+            //    var participante = matriz._participante.GetValorDBDatasource<string>(dbdts, i);
+            //    var comissao = matriz._comissao.GetValorDBDatasource<double>(dbdts, i);
 
-                if (!String.IsNullOrEmpty(participante) && comissao == 0)
-                {
-                    throw new FormValidationException(matriz._comissao.Mensagem, matriz._comissao.ItemUID, "", i);
-                }
-            }
+            //    if (!String.IsNullOrEmpty(participante) && comissao == 0)
+            //    {
+            //        throw new FormValidationException(matriz._comissao.Mensagem, matriz._comissao.ItemUID, "", i);
+            //    }
+            //}
         }
 
         public override void OnAfterItemPressed(string FormUID, ref ItemEvent pVal, out bool BubbleEvent)

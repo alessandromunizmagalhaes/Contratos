@@ -14,7 +14,7 @@ namespace CafebrasContratos
         public Coluna Percentual { get { return new ColunaPercent("PercItem", "Percentual"); } }
         public Coluna Diferencial { get { return new ColunaQuantity("Difere", "Diferencial"); } }
 
-        public TabelaItensDoContratoFinal() : base("UPD_CFC1", "Itens do Contrato", BoUTBTableType.bott_MasterDataLines)
+        public TabelaItensDoContratoFinal() : base("UPD_CFC1", "Itens do Contrato", BoUTBTableType.bott_DocumentLines)
         {
 
         }
@@ -26,7 +26,7 @@ namespace CafebrasContratos
         public Coluna ItemName { get { return new ColunaPercent("PercCom", "Percentual"); } }
         public Coluna Percentual { get { return new ColunaAtivo(); } }
 
-        public TabelaCorretoresDoContratoFinal() : base("UPD_CFC2", "Corretores do Contrato", BoUTBTableType.bott_MasterDataLines)
+        public TabelaCorretoresDoContratoFinal() : base("UPD_CFC2", "Corretores do Contrato", BoUTBTableType.bott_DocumentLines)
         {
 
         }
@@ -38,7 +38,7 @@ namespace CafebrasContratos
         public Coluna ItemName { get { return new ColunaPercent("PercCom", "Percentual"); } }
         public Coluna Percentual { get { return new ColunaAtivo(); } }
 
-        public TabelaResponsaveisDoContratoFinal() : base("UPD_CFC3", "Responsáveis do Contrato", BoUTBTableType.bott_MasterDataLines)
+        public TabelaResponsaveisDoContratoFinal() : base("UPD_CFC3", "Responsáveis do Contrato", BoUTBTableType.bott_DocumentLines)
         {
 
         }
@@ -48,7 +48,7 @@ namespace CafebrasContratos
     {
         public Coluna MyProperty { get { return new ColunaVarchar("Certif", "Certificado", 30); } }
 
-        public TabelaCertificadosDoContratoFinal() : base("UPD_CFC4", "Certificados do Contrato", BoUTBTableType.bott_MasterDataLines)
+        public TabelaCertificadosDoContratoFinal() : base("UPD_CFC4", "Certificados do Contrato", BoUTBTableType.bott_DocumentLines)
         {
 
         }
@@ -59,7 +59,7 @@ namespace CafebrasContratos
         public Coluna Caminho { get { return new ColunaLink("Path", "Caminho"); } }
         public Coluna Data { get { return new ColunaDate("Date", "Data"); } }
 
-        public TabelaAnexosDoContratoFinal() : base("UPD_CFC5", "Anexos do Contrato", BoUTBTableType.bott_MasterDataLines)
+        public TabelaAnexosDoContratoFinal() : base("UPD_CFC5", "Anexos do Contrato", BoUTBTableType.bott_DocumentLines)
         {
 
         }
@@ -81,7 +81,7 @@ namespace CafebrasContratos
         public Coluna TipoDocumento { get { return new ColunaVarchar("TipoDoc", "Tipo Documento", 3); } }
         public Coluna NumeroDocumento { get { return new ColunaVarchar("NumDoc", "Numero Documento", 50); } }
 
-        public TabelaDadosRetiradaDoContratoFinal() : base("UPD_CFC6", "Dados Retirada Contrato F", BoUTBTableType.bott_MasterDataLines)
+        public TabelaDadosRetiradaDoContratoFinal() : base("UPD_CFC6", "Dados Retirada Contrato F", BoUTBTableType.bott_DocumentLines)
         {
 
         }
@@ -95,7 +95,7 @@ namespace CafebrasContratos
         public Coluna Sacas60 { get { return new ColunaQuantity("Sacas60", "Sacas/60"); } }
         public Coluna ValorTotal { get { return new ColunaPrice("ValorTot", "Valor Total"); } }
 
-        public TabelaPrevisaoEntregaDoContratoFinal() : base("UPD_CFC7", "Previsao Entrega Contrato F", BoUTBTableType.bott_MasterDataLines)
+        public TabelaPrevisaoEntregaDoContratoFinal() : base("UPD_CFC7", "Previsao Entrega Contrato F", BoUTBTableType.bott_DocumentLines)
         {
 
         }
@@ -109,7 +109,7 @@ namespace CafebrasContratos
         public Coluna Data { get { return new ColunaDate("Data", "Data"); } }
         public Coluna Observacoes { get { return new ColunaText("Obs", "Observações"); } }
 
-        public TabelaPrevisaoPagamentoDoContratoFinal() : base("UPD_CFC8", "Previsao PGTO Contrato F", BoUTBTableType.bott_MasterDataLines)
+        public TabelaPrevisaoPagamentoDoContratoFinal() : base("UPD_CFC8", "Previsao PGTO Contrato F", BoUTBTableType.bott_DocumentLines)
         {
 
         }
@@ -282,7 +282,7 @@ namespace CafebrasContratos
         public TabelaContratoFinal() : base(
             "UPD_OCFC"
             , "Contrato de Compra Final"
-            , BoUTBTableType.bott_MasterData
+            , BoUTBTableType.bott_Document
             , new UDOParams() { CanDelete = BoYesNoEnum.tNO, CanCancel = BoYesNoEnum.tNO }
             , new List<Tabela>() {
                     new TabelaItensDoContratoFinal()

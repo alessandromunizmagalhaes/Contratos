@@ -14,7 +14,7 @@ namespace CafebrasContratos
         public Coluna Percentual { get { return new ColunaPercent("PercItem", "Percentual"); } }
         public Coluna Diferencial { get { return new ColunaQuantity("Difere", "Diferencial"); } }
 
-        public TabelaItensDoPreContrato() : base("UPD_CCC1", "Itens do Contrato", BoUTBTableType.bott_MasterDataLines)
+        public TabelaItensDoPreContrato() : base("UPD_CCC1", "Itens do Contrato", BoUTBTableType.bott_DocumentLines)
         {
 
         }
@@ -26,7 +26,7 @@ namespace CafebrasContratos
         public Coluna ItemName { get { return new ColunaPercent("PercCom", "Percentual"); } }
         public Coluna Percentual { get { return new ColunaAtivo(); } }
 
-        public TabelaCorretoresDoPreContrato() : base("UPD_CCC2", "Corretores do Contrato", BoUTBTableType.bott_MasterDataLines)
+        public TabelaCorretoresDoPreContrato() : base("UPD_CCC2", "Corretores do Contrato", BoUTBTableType.bott_DocumentLines)
         {
 
         }
@@ -38,7 +38,7 @@ namespace CafebrasContratos
         public Coluna ItemName { get { return new ColunaPercent("PercCom", "Percentual"); } }
         public Coluna Percentual { get { return new ColunaAtivo(); } }
 
-        public TabelaResponsaveisDoPreContrato() : base("UPD_CCC3", "Responsáveis do Contrato", BoUTBTableType.bott_MasterDataLines)
+        public TabelaResponsaveisDoPreContrato() : base("UPD_CCC3", "Responsáveis do Contrato", BoUTBTableType.bott_DocumentLines)
         {
 
         }
@@ -48,7 +48,7 @@ namespace CafebrasContratos
     {
         public Coluna MyProperty { get { return new ColunaVarchar("Certif", "Certificado", 30); } }
 
-        public TabelaCertificadosDoPreContrato() : base("UPD_CCC4", "Certificados do Contrato", BoUTBTableType.bott_MasterDataLines)
+        public TabelaCertificadosDoPreContrato() : base("UPD_CCC4", "Certificados do Contrato", BoUTBTableType.bott_DocumentLines)
         {
 
         }
@@ -59,7 +59,7 @@ namespace CafebrasContratos
         public Coluna Caminho { get { return new ColunaLink("Path", "Caminho"); } }
         public Coluna Data { get { return new ColunaDate("Date", "Data"); } }
 
-        public TabelaAnexosDoPreContrato() : base("UPD_CCC5", "Anexos do Contrato", BoUTBTableType.bott_MasterDataLines)
+        public TabelaAnexosDoPreContrato() : base("UPD_CCC5", "Anexos do Contrato", BoUTBTableType.bott_DocumentLines)
         {
 
         }
@@ -215,7 +215,7 @@ namespace CafebrasContratos
         public TabelaPreContrato() : base(
             "UPD_OCCC"
             , "Contrato de Compra Geral"
-            , BoUTBTableType.bott_MasterData
+            , BoUTBTableType.bott_Document
             , new UDOParams() { CanDelete = BoYesNoEnum.tNO, CanCancel = BoYesNoEnum.tNO }
             , new List<Tabela>() {
                     new TabelaItensDoPreContrato()

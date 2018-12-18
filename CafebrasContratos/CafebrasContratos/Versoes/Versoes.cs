@@ -56,4 +56,27 @@ namespace CafebrasContratos
             new SBO_SP_PostTransactionNotice().Atualizar(postTransaction);
         }
     }
+
+
+    public class Versao_Dois : Versionamento
+    {
+        public override double Versao { get => 2.0; }
+
+        public override void Aplicar(Database db)
+        {
+            var tabelas = new List<Tabela>(){
+                new TabelaPreContrato(),
+                new TabelaContratoFinal()
+            };
+
+            for (int i = 0; i < tabelas.Count; i++)
+            {
+                Dialogs.Info($"Removendo tabelas... {i + 1} de {tabelas.Count}... Aguarde...", SAPbouiCOM.BoMessageTime.bmt_Long);
+
+                db.ExcluirTabela(tabelas[i]);
+
+                db.CriarTabela(tabelas[i]);
+            }
+        }
+    }
 }
