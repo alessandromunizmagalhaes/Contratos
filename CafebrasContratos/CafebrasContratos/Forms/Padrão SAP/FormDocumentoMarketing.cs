@@ -206,8 +206,8 @@ namespace CafebrasContratos
 
                 ((ComboBox)matrix.Columns.Item("2011").Cells.Item(1).Specific).Select(param.Utilizacao, BoSearchKey.psk_ByValue);
                 matrix.Columns.Item("24").Cells.Item(1).Specific.Value = param.Deposito;
-                matrix.Columns.Item("14").Cells.Item(1).Specific.Value = Helpers.ToString(param.PrecoUnitario);
-                matrix.Columns.Item(_qtdSaca.ItemUID).Cells.Item(1).Specific.Value = Helpers.ToString(param.QuantidadeSacas);
+                matrix.Columns.Item("14").Cells.Item(1).Specific.Value = Helpers.ToStringParaCampoSAPEmTela(param.PrecoUnitario);
+                matrix.Columns.Item(_qtdSaca.ItemUID).Cells.Item(1).Specific.Value = Helpers.ToStringParaCampoSAPEmTela(param.QuantidadeSacas);
 
                 matrix.Columns.Item("1").Cells.Item(1).Click();
                 form.Items.Item("14").Click();

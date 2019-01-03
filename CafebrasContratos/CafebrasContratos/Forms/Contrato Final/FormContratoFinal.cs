@@ -841,7 +841,8 @@ namespace CafebrasContratos
             using (var rsCOM = new RecordSet())
             {
                 var rs = rsCOM.DoQuery($"SELECT BPLID FROM OWHS WHERE WhsCode = '{deposito}'");
-                return rs.Fields.Item("BPLID").Value.ToString();
+                var bplID = rs.Fields.Item("BPLID").Value.ToString();
+                return bplID == "0" ? "" : bplID;
             }
         }
 
