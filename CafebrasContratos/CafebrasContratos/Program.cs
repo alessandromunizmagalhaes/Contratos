@@ -11,7 +11,7 @@ namespace CafebrasContratos
     {
         private static string _addonName = "Cafébras Contratos";
         public static string _grupoAprovador;
-        public static double _versaoAddon = 3.0;
+        public static double _versaoAddon = 4.0;
 
         public static readonly List<Peneira> _peneiras = new List<Peneira>() { };
         public static readonly List<string> _gruposDeItensPermitidos = new List<string>() { };
