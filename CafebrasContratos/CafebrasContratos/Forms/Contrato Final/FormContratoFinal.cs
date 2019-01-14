@@ -885,6 +885,11 @@ namespace CafebrasContratos
                 ItemUID = "doctotal",
                 Datasource = "DocTotal"
             };
+            public ItemForm Quantidade = new ItemForm()
+            {
+                ItemUID = "quantity",
+                Datasource = "Quantity"
+            };
         }
         
         public class MatrizRetirada : MatrizChildForm, IItemFormContrato
