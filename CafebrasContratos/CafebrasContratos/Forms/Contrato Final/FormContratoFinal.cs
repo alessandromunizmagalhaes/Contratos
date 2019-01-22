@@ -548,10 +548,11 @@ namespace CafebrasContratos
             if (pVal.ColUID == _matrizDocumentos.Codigo.ItemUID)
             {
                 var mtx = GetMatrix(FormUID, _matrizDocumentos.ItemUID);
-                var codigo = mtx.Columns.Item(pVal.ColUID).Cells.Item(pVal.Row).Specific.Value;
+                var dt = GetDatatable(FormUID, _matrizDocumentos.Datasource);
+                int codigo = dt.GetValue("DocEntry", pVal.Row - 1);//mtx.Columns.Item(pVal.ColUID).Cells.Item(pVal.Row).Specific.Value;
                 string objtype = mtx.Columns.Item(_matrizDocumentos.TipoDocumento.ItemUID).Cells.Item(pVal.Row).Specific.Value;
                 var form = new HandlerTipoDeObjeto().GetByObjectType(Int32.Parse(objtype)).Form;
-                form.Abrir(codigo);
+                form.Abrir(codigo.ToString());
             }
         }
 
@@ -777,13 +778,14 @@ namespace CafebrasContratos
                     i++;
                     sql += $@"SELECT 
 	                    ObjType as Tipo
-	                    , tb0.DocEntry
+	                    , tb0.DocNum
 	                    , tb0.DocStatus
 	                    , tb0.DocDate
 	                    , tb1.ItemCode
 	                    , tb1.Dscription
 	                    , tb1.Quantity
 	                    , tb0.DocTotal 
+                        , tb0.DocEntry
                     FROM {tabela.NomeTabela} tb0
                     INNER JOIN (
 	                    SELECT 
@@ -857,8 +859,8 @@ namespace CafebrasContratos
             };
             public ItemForm Codigo = new ItemForm()
             {
-                ItemUID = "docentry",
-                Datasource = "DocEntry"
+                ItemUID = "docnum",
+                Datasource = "DocNum"
             };
             public ItemForm Status = new ItemForm()
             {
